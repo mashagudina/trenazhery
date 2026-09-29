@@ -257,6 +257,13 @@ p.hint small{opacity:.85}
     x0 = null;
   }, {passive:true});
 
+  if ((""+location.search).indexOf("shot") !== -1){
+    var navEl = document.querySelector('.nav');
+    if (navEl){ navEl.style.display = 'none'; }
+    var pslide = document.querySelectorAll('.slide');
+    for (var p = 0; p < pslide.length; p++){ pslide[p].style.paddingBottom = '28px'; }
+  }
+
   render();
 })();
 

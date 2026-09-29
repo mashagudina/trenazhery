@@ -11,8 +11,11 @@ body{font-family:"Segoe UI",Verdana,sans-serif; color:var(--ink); min-height:100
 h1{font-size:30px; color:#fff6e6; margin-bottom:8px}
 p{opacity:.85; margin-bottom:22px}
 .cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px}
-.c{display:block; background:var(--card); border:1px solid var(--line); border-radius:18px; padding:20px; color:var(--ink); text-decoration:none; transition:transform .15s ease, border-color .15s ease}
+.c{display:block; background:var(--card); border:1px solid var(--line); border-radius:18px; padding:16px; color:var(--ink); text-decoration:none; transition:transform .15s ease, border-color .15s ease}
 .c:hover{border-color:var(--main); transform:translateY(-3px); text-decoration:none}
+.c .pic{aspect-ratio:16/9; border-radius:12px; overflow:hidden; margin-bottom:12px; border:1px solid var(--line); background:var(--card)}
+.c .pic img{width:100%; height:100%; object-fit:cover; display:block; transition:transform .25s ease}
+.c:hover .pic img{transform:scale(1.045)}
 .c .t{font-weight:800; color:#fff6e6; font-size:20px; display:block; margin-bottom:4px}
 .c .d{opacity:.8; font-size:15px}
 </style>
@@ -21,12 +24,12 @@ p{opacity:.85; margin-bottom:22px}
 <h1>Презентации ко всем урокам скорочтения</h1>
 <p>72 урока в каждом возрасте · в каждой презентации четыре крыла: скорость, память, внимание, логика, интеллект</p>
 <div class="cards">
-<a class="c" href="5-6/index.html"><span class="t">5–6 лет</span><span class="d">Сказка · 72 урока</span></a>
-<a class="c" href="6-7/index.html"><span class="t">6–7 лет</span><span class="d">Сказка · 72 урока</span></a>
-<a class="c" href="7-10/index.html"><span class="t">7–10 лет</span><span class="d">Юная школа · 72 урока</span></a>
-<a class="c" href="11-13/index.html"><span class="t">11–13 лет</span><span class="d">Астрономическая башня · 72 урока</span></a>
-<a class="c" href="14-17/index.html"><span class="t">14–17 лет</span><span class="d">Библиотека · 72 урока</span></a>
-<a class="c" href="18/index.html"><span class="t">18+</span><span class="d">Кабинет · 72 урока</span></a>
+<a class="c" href="5-6/index.html"><span class="pic"><img src="5-6/urok_01.jpg" alt="" loading="lazy" width="640" height="360"></span><span class="t">5–6 лет</span><span class="d">Сказка · 72 урока</span></a>
+<a class="c" href="6-7/index.html"><span class="pic"><img src="6-7/urok_01.jpg" alt="" loading="lazy" width="640" height="360"></span><span class="t">6–7 лет</span><span class="d">Сказка · 72 урока</span></a>
+<a class="c" href="7-10/index.html"><span class="pic"><img src="7-10/urok_01.jpg" alt="" loading="lazy" width="640" height="360"></span><span class="t">7–10 лет</span><span class="d">Юная школа · 72 урока</span></a>
+<a class="c" href="11-13/index.html"><span class="pic"><img src="11-13/urok_01.jpg" alt="" loading="lazy" width="640" height="360"></span><span class="t">11–13 лет</span><span class="d">Астрономическая башня · 72 урока</span></a>
+<a class="c" href="14-17/index.html"><span class="pic"><img src="14-17/urok_01.jpg" alt="" loading="lazy" width="640" height="360"></span><span class="t">14–17 лет</span><span class="d">Библиотека · 72 урока</span></a>
+<a class="c" href="18/index.html"><span class="pic"><img src="18/urok_01.jpg" alt="" loading="lazy" width="640" height="360"></span><span class="t">18+</span><span class="d">Кабинет · 72 урока</span></a>
 </div>
 </body>
 </html>
