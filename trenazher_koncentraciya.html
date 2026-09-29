@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Концентрация · Тренажёр</title>
+<style>
+:root{
+  --bg:#0e1330;--card:#1a2050;--card-2:#222a63;--deep:#0b0f26;--soft:#252c66;
+  --ink:#f4e9d0;--dim:#b8c0e0;--line:#39427f;--gold:#f0b429;--gold-lt:#ffd166;
+  --wine:#a83246;--ok:#48c98e;--bad:#e8604f;--accent:var(--gold);--ink-on-gold:#2a1f05;
+  --shadow:0 10px 30px rgba(0,0,0,.45);
+  --glow:0 0 0 1px rgba(255,209,102,.22), 0 8px 30px rgba(240,180,41,.22);
+}
+html[data-theme="light"]{
+  --bg:#f6eedb;--card:#fffdf6;--card-2:#fdf4e0;--deep:#fffdf6;--soft:#f4e8cd;
+  --ink:#2b2415;--dim:#6d6150;--line:#dfd0b0;--gold:#b8791a;--gold-lt:#e8b23d;
+  --wine:#7b1e2b;--ok:#2f8a5f;--bad:#c0392b;--ink-on-gold:#fffdf6;
+  --shadow:0 8px 24px rgba(90,60,10,.16);
+  --glow:0 0 0 1px rgba(184,121,26,.3), 0 8px 26px rgba(184,121,26,.2);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:"Segoe UI",Arial,sans-serif;
+  background:
+    radial-gradient(1100px 620px at 80% -10%, rgba(255,209,102,.18), transparent 62%),
+    radial-gradient(820px 560px at 4% 106%, rgba(129,116,224,.20), transparent 60%),
+    var(--bg);
+  background-attachment:fixed;color:var(--ink);font-size:17px;
+  overflow-x:hidden;min-height:100vh;padding-bottom:calc(24px + env(safe-area-inset-bottom));
+  -webkit-text-size-adjust:100%;
+}
+html[data-theme="light"] body{
+  background:
+    radial-gradient(1000px 560px at 82% -12%, rgba(232,178,61,.32), transparent 60%),
+    radial-gradient(760px 520px at 2% 104%, rgba(123,30,43,.15), transparent 60%),
+    var(--bg);
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    radial-gradient(1.7px 1.7px at 12% 16%,#fff9,transparent),
+    radial-gradient(1.5px 1.5px at 27% 62%,#fff8,transparent),
+    radial-gradient(1.8px 1.8px at 44% 9%,#fff9,transparent),
+    radial-gradient(1.3px 1.3px at 58% 41%,#fff7,transparent),
+    radial-gradient(1.6px 1.6px at 71% 24%,#fff9,transparent),
+    radial-gradient(1.2px 1.2px at 86% 57%,#fff7,transparent),
+    radial-gradient(1.3px 1.3px at 35% 88%,#fff7,transparent),
+    radial-gradient(1.5px 1.5px at 64% 79%,#fff8,transparent);
+  animation:twinkle 5.5s ease-in-out infinite alternate;
+}
+html[data-theme="light"] body::before{opacity:.3}
+@keyframes twinkle{from{opacity:.5}to{opacity:1}}
+.candles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.candle{position:absolute;width:9px;height:38px;border-radius:5px 5px 3px 3px;
+  background:linear-gradient(180deg,#fdf3dc,#c9b78c);opacity:.55;animation:floatY 10s ease-in-out infinite}
+.candle::before{content:"";position:absolute;left:50%;bottom:100%;margin-bottom:2px;
+  width:8px;height:14px;border-radius:50% 50% 46% 46%;
+  background:radial-gradient(circle at 50% 72%, #fff6d2, var(--gold-lt));
+  box-shadow:0 0 22px 8px rgba(255,209,102,.5);animation:flicker 1.7s ease-in-out infinite alternate}
+.candle::after{content:"";position:absolute;left:50%;bottom:100%;transform:translateX(-50%);
+  width:160px;height:160px;border-radius:50%;
+  background:radial-gradient(circle, rgba(255,209,102,.18), transparent 68%)}
+.c1{left:5%;top:22%;animation-duration:11s}
+.c2{right:8%;top:14%;animation-duration:13s;animation-delay:-4s}
+.c3{left:90%;top:70%;animation-duration:15s;animation-delay:-8s;transform:scale(.78)}
+html[data-theme="light"] .candle{opacity:.38}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+@keyframes flicker{from{transform:translateX(-50%) scaleY(1);opacity:.8}to{transform:translateX(-50%) scaleY(1.2) scaleX(1.06);opacity:1}}
+
+header{position:relative;z-index:1;
+  background:linear-gradient(135deg, var(--wine), #6d1f2e);
+  padding:16px 18px;text-align:center;border-bottom:2px solid var(--gold);
+  box-shadow:0 6px 24px rgba(0,0,0,.45)}
+header h1{margin:0;font-size:25px;color:#fff3d6;text-shadow:0 2px 8px rgba(0,0,0,.5)}
+header p{margin:5px 0 0;font-size:14px;color:#f2d9a8;opacity:.95}
+.tgl{position:absolute;right:14px;top:14px;background:transparent;
+  border:1px solid rgba(255,243,214,.5);color:#fff3d6;border-radius:20px;padding:6px 13px;
+  font-size:13px;cursor:pointer;font-family:inherit;min-height:32px}
+.tgl:hover{background:rgba(255,243,214,.14)}
+html[data-theme="light"] .tgl{border-color:var(--line);color:var(--wine)}
+main{position:relative;z-index:1;max-width:760px;margin:18px auto;padding:0 14px}
+
+/* уровень / вкладки */
+.tab{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.tab button{border:1px solid var(--line);background:var(--soft);color:var(--ink);
+  padding:9px 18px;border-radius:20px;font-size:15px;cursor:pointer;font-family:inherit;
+  min-height:42px;transition:.15s}
+.tab button:hover{border-color:var(--gold-lt)}
+.tab button.on{background:linear-gradient(180deg,var(--gold-lt),var(--gold));
+  color:var(--ink-on-gold);border-color:transparent;font-weight:700}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;
+  padding:20px;margin-bottom:20px;box-shadow:var(--shadow);
+  transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease}
+.card:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:var(--glow),var(--shadow)}
+h2{margin:0 0 12px;font-size:20px;color:var(--gold-lt);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+h2::after{content:"";flex:1;height:1px;min-width:30px;background:linear-gradient(90deg,var(--line),transparent)}
+p{margin:6px 0;color:var(--dim)}
+
+.btn{border:none;border-radius:20px;padding:12px 22px;font-size:16px;cursor:pointer;
+  font-family:inherit;min-height:48px;
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold));color:var(--ink-on-gold);
+  font-weight:700;box-shadow:0 4px 16px rgba(240,180,41,.32);
+  transition:transform .14s ease, filter .2s}
+.btn:hover{filter:brightness(1.07);transform:translateY(-2px)}
+.btn.ghost{background:var(--card);border:2px solid var(--line);color:var(--gold-lt);
+  box-shadow:none;font-weight:700}
+.btn.ghost:hover{border-color:var(--gold-lt);background:var(--soft)}
+.btn:active{transform:scale(.97)}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+:focus-visible{outline:3px solid var(--gold-lt);outline-offset:2px;border-radius:8px}
+
+/* HUD */
+.hud{position:relative;z-index:1;max-width:760px;margin:14px auto 0;padding:0 14px;
+  display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  background:var(--card-2);border:1px solid var(--line);border-radius:14px;padding:10px 14px}
+.hud .stat{font-size:15px;color:var(--gold-lt);font-weight:600}
+.hud .stat b{color:var(--ink)}
+
+/* цепочка слов */
+.chain{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;justify-content:center;
+  min-height:56px;align-items:center}
+.word{background:var(--card-2);border:1px solid var(--line);border-radius:12px;
+  padding:10px 14px;font-size:20px;font-weight:700;color:var(--ink)}
+.word.gone{opacity:.18;filter:grayscale(1)}
+.chainInput{width:100%;font-size:18px;background:var(--card-2);color:var(--ink);
+  border:1px solid var(--line);border-radius:12px;padding:12px;font-family:inherit;min-height:52px}
+
+/* сетки (память/фотоглаз/пары/Шульте/буквы) */
+.grid{display:grid;gap:6px;margin:14px 0;user-select:none;padding:8px;border-radius:14px;
+  background:var(--card-2);border:1px solid var(--line)}
+.cell{background:var(--deep);color:var(--ink);border:1px solid var(--line);border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-weight:700;cursor:pointer;
+  font-size:22px;aspect-ratio:1;transition:background .15s, transform .12s, box-shadow .2s, color .15s}
+.cell:hover{transform:scale(1.05);border-color:var(--gold-lt)}
+.cell.sel{background:linear-gradient(180deg,#5fdba0,var(--ok));color:#08281a;border-color:transparent;
+  box-shadow:0 0 18px rgba(72,201,142,.55);animation:pop .28s ease}
+.cell.err{background:linear-gradient(180deg,#ef7a68,var(--bad));color:#2a0d0a;border-color:transparent;
+  box-shadow:0 0 18px rgba(232,96,79,.55);animation:shake .3s ease}
+.cell.ok{outline:3px solid var(--ok);outline-offset:1px}
+.cell.hide{color:transparent}
+@keyframes pop{from{transform:scale(.7)}to{transform:scale(1.07)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+
+/* дворец */
+.rooms{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.room{background:var(--card-2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;
+  font-size:16px;color:var(--ink);min-width:96px;text-align:center}
+.room b{display:block;color:var(--gold-lt);font-size:14px;margin-bottom:4px}
+.room .it{font-size:18px;font-weight:700}
+
+/* ввод / ответ */
+input[type="number"],input[type="text"]{background:var(--card-2);color:var(--ink);
+  border:1px solid var(--line);border-radius:10px;padding:10px;font-family:inherit;font-size:18px;
+  min-height:48px;max-width:150px}
+.opts{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+.opt{background:var(--card-2);border:2px solid var(--line);color:var(--ink);border-radius:14px;
+  padding:14px 18px;font-size:18px;cursor:pointer;font-family:inherit;min-height:52px;
+  display:flex;align-items:center;justify-content:center;text-align:center}
+.opt:hover{border-color:var(--gold-lt)}
+.opt.sel{background:linear-gradient(180deg,#5fdba0,var(--ok));color:#08281a;border-color:transparent}
+.opt.err{background:linear-gradient(180deg,#ef7a68,var(--bad));color:#2a0d0a;border-color:transparent}
+.opt.ok{background:linear-gradient(180deg,#5fdba0,var(--ok));color:#08281a;border-color:transparent}
+
+.fb{min-height:24px;margin:10px 0;font-size:16px;font-weight:700;color:var(--dim)}
+.fb.good{color:var(--ok)}
+.fb.bad{color:var(--bad)}
+.hint{font-size:15px;color:var(--dim);margin:4px 0}
+.timer{font-size:22px;font-weight:800;color:var(--gold-lt);font-variant-numeric:tabular-nums}
+
+/* предметы для дворца / карточки */
+.big{font-size:44px;line-height:1.1}
+.hidden{display:none}
+.footer{position:relative;z-index:1;text-align:center;color:var(--dim);font-size:13px;margin:20px 0;opacity:.75}
+
+@media (max-width:520px){
+  body{font-size:16px}
+  header h1{font-size:21px}
+  .card{padding:16px 14px}
+  .btn{width:100%}
+  .tgl{position:static;display:block;margin:10px auto 0}
+  .candle.c3{display:none}
+  .chainInput{font-size:17px}
+  .word{font-size:18px;padding:8px 11px}
+  .cell{font-size:18px}
+}
+
+@media print{
+  :root{--bg:#fff;--card:#fff;--card-2:#fff;--soft:#fff;--deep:#fff;
+    --ink:#1a1a1a;--line:#000;--gold:#000;--gold-lt:#333;--wine:#555;--ink-on-gold:#000}
+  html,body{background:#fff !important;color:#1a1a1a !important}
+  body::before,.candles,.tgl,.btn,.row,.hud{display:none !important}
+  *,*::before,*::after{background-image:none !important;text-shadow:none !important;
+    box-shadow:none !important;animation:none !important;transition:none !important;
+    color:#1a1a1a !important;border-color:#000 !important}
+  .card{border:.4pt solid #000;border-radius:0;transform:none;page-break-inside:avoid}
+  .grid{border:.4pt solid #000}
+  .cell{border:.4pt solid #000;background:#fff !important;aspect-ratio:auto;min-height:22px}
+  .cell.hide{color:transparent}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none !important;animation:none !important}
+  body::before{animation:none}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>🎯 Тренажёр концентрации</h1>
+  <p>Таблица поиска · Поиск буквы · N-back · Таймер-блоки</p>
+  <button class="tgl" id="themeBtn" type="button" aria-label="Переключить тему">Светлая тема</button>
+</header>
+<div class="candles" aria-hidden="true">
+  <div class="candle c1"></div><div class="candle c2"></div><div class="candle c3"></div>
+</div>
+<div class="hud">
+  <span class="stat">Уровень: <b id="lvName">7–10</b></span>
+  <span class="stat">Очки: <b id="score">0</b></span>
+  <span class="stat">Рекорд: <b id="best">0</b></span>
+  <span class="stat" id="doneStat">Заданий: 0</span>
+</div>
+<main>
+
+  <div class="tab" role="group" aria-label="Выбор уровня">
+    <button type="button" data-lv="7-10" class="on">7–10</button>
+    <button type="button" data-lv="11-13">11–13</button>
+    <button type="button" data-lv="14-17">14–17</button>
+    <button type="button" data-lv="18">18+</button>
+  </div>
+
+  <div class="card">
+    <h2>👁 Таблица поиска</h2>
+    <p>Не ищи числа по порядку — ищи только те четыре, что указаны. Голову не поворачивай,
+       веди только глазами.</p>
+    <div class="grid" id="shGrid"></div>
+    <p class="hint">Найди: <b id="shTargets"></b></p>
+    <p><span class="timer" id="shTime">0.0</span> сек · найдено <span id="shFound">0</span>/4</p>
+    <div class="fb" id="shFb"></div>
+    <div class="row"><button class="btn" id="shNew" type="button">Новая таблица</button></div>
+  </div>
+
+  <div class="card">
+    <h2>🔤 Найди букву в рядах</h2>
+    <p>Зачеркни все буквы «<b id="ltLetter">Ж</b>». Считай вслух, но не останавливайся на ошибках —
+       просто продолжай считать. Ошибочные нажатия считаются отдельно.</p>
+    <div id="ltBox"></div>
+    <p>Найдено: <span id="ltFound">0</span> · Ошибок: <span id="ltErr">0</span> ·
+       <span class="timer" id="ltTime">0.0</span> сек</p>
+    <div class="fb" id="ltFb"></div>
+    <div class="row"><button class="btn" id="ltNew" type="button">Новая проба</button></div>
+  </div>
+
+  <div class="card">
+    <h2>🔙 N-back: повтори назад</h2>
+    <p id="nbHow"></p>
+    <div class="chain" id="nbShow"></div>
+    <div class="opts" id="nbOpts"></div>
+    <div class="fb" id="nbFb"></div>
+    <div class="row">
+      <button class="btn" id="nbStart" type="button">Начать</button>
+      <button class="btn ghost" id="nbRestart" type="button">Заново</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🧘 Таймер-метод: блоки и отдых</h2>
+    <p>Работаешь одним куском, потом отдых. Отмечай честно: только то, что реально сделал.
+       К концу занятия концентрация падает сама — это нормально, следи за этим.</p>
+    <p><span class="timer" id="tmClock">--:--</span></p>
+    <p id="tmState">Блок не запущен.</p>
+    <div class="fb" id="tmFb"></div>
+    <div class="row">
+      <button class="btn" id="tmStart" type="button">Начать блок</button>
+      <button class="btn ghost" id="tmPause" type="button">Пауза</button>
+      <button class="btn ghost" id="tmStop" type="button">Стоп</button>
+    </div>
+  </div>
+</main>
+<div class="footer">Волшебная школа · память · концентрация · интеллект</div>
+<script>
+var PAGEID="kon";
+var LV='7-10';
+var DATA={"7-10": {"name": "7–10 лет", "size": 4, "cols": 16, "rows": 8, "nback": 1, "nbLen": 30, "block": 10, "rest": 5, "letter": "Ж"}, "11-13": {"name": "11–13 лет", "size": 5, "cols": 16, "rows": 10, "nback": 2, "nbLen": 40, "block": 15, "rest": 5, "letter": "Р"}, "14-17": {"name": "14–17 лет", "size": 6, "cols": 18, "rows": 12, "nback": 2, "nbLen": 50, "block": 25, "rest": 5, "letter": "К"}, "18": {"name": "18+ (взрослые)", "size": 6, "cols": 18, "rows": 14, "nback": 3, "nbLen": 60, "block": 25, "rest": 5, "letter": "С"}};
+
+const DATA_REF = null;
+let score = 0, done = 0;
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function storeGet(){try{return JSON.parse(localStorage.getItem('mm_'+PAGEID+'_'+LV))||{score:0,done:0};}catch(e){return {score:0,done:0};}}
+function storeSet(){try{localStorage.setItem('mm_'+PAGEID+'_'+LV,JSON.stringify({score,done}));}catch(e){}}
+function updateHud(){document.getElementById('score').textContent=score;document.getElementById('doneStat').textContent='Заданий: '+done;
+  const b=storeGet().score;document.getElementById('best').textContent=Math.max(score,b);storeSet();}
+function fb(el,txt,kind){el.textContent=txt;el.className='fb '+(kind||'');}
+function setLevel(lv){
+  LV=lv;document.getElementById('lvName').textContent=DATA[lv].name;
+  const st=storeGet();score=0;done=st.done||0;updateHud();
+  document.querySelectorAll('.tab button').forEach(b=>b.classList.toggle('on',b.dataset.lv===lv));
+  if(window[PAGEID+'_init'])window[PAGEID+'_init']();
+}
+document.getElementById('themeBtn').addEventListener('click',()=>{
+  const el=document.documentElement;const light=el.dataset.theme==='light';
+  el.dataset.theme=light?'dark':'light';document.getElementById('themeBtn').textContent=light?'Светлая тема':'Тёмная тема';
+});
+document.querySelectorAll('.tab button').forEach(b=>b.addEventListener('click',()=>setLevel(b.dataset.lv)));
+
+let sh={nums:[],targets:[],t0:0,found:0,timer:null,locked:false};
+let lt={letter:'Ж',total:0,found:0,err:0,t0:0,timer:null,locked:false};
+let nb={n:1,seq:[],i:0,right:0,wrong:0,done:false};
+let tm={left:0,mode:'work',t:null};
+
+function kon_init(){
+  document.getElementById('ltLetter').textContent=DATA[LV].letter;
+  shNew(); ltNew(); nbRestart(); tmStop();
+}
+
+/* --- таблица поиска --- */
+function shNew(){
+  const s=DATA[LV].size, n=s*s;
+  sh.nums=shuffle(Array.from({length:n},(_,i)=>i+1));
+  sh.targets=shuffle([...Array(n).keys()]).slice(0,4);
+  sh.found=0; sh.locked=false;
+  const g=document.getElementById('shGrid');
+  g.style.gridTemplateColumns='repeat('+s+',1fr)';
+  g.innerHTML='';
+  sh.nums.forEach((v,i)=>{
+    const c=document.createElement('div');c.className='cell';c.textContent=v;c.tabIndex=0;
+    c.setAttribute('role','button');c.setAttribute('aria-label','Число '+v);
+    c.addEventListener('click',()=>shPick(i,c));
+    c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();shPick(i,c);}});
+    g.appendChild(c);
+  });
+  document.getElementById('shTargets').textContent=sh.targets.map(i=>sh.nums[i]).sort((a,b)=>a-b).join(', ');
+  document.getElementById('shFound').textContent='0';
+  document.getElementById('shTime').textContent='0.0';
+  fb(document.getElementById('shFb'),'Засекаю время. Ищи только указанные числа.','good');
+  clearInterval(sh.timer); sh.t0=Date.now();
+  sh.timer=setInterval(()=>{document.getElementById('shTime').textContent=((Date.now()-sh.t0)/1000).toFixed(1);},100);
+}
+function shPick(i,cell){
+  if(sh.locked)return;
+  if(sh.targets.includes(i)){
+    if(cell.classList.contains('ok'))return;
+    cell.classList.add('ok'); sh.found++;
+    document.getElementById('shFound').textContent=sh.found;
+    if(sh.found===4){
+      sh.locked=true; clearInterval(sh.timer);
+      const sec=((Date.now()-sh.t0)/1000).toFixed(1);
+      const pts=Math.max(5,60-Math.round(parseFloat(sec)*2));
+      score+=pts;done++;
+      fb(document.getElementById('shFb'),'Все четыре найдены за '+sec+' сек. +'+pts+' очков.','good');
+      updateHud();setTimeout(shNew,1800);
+    }
+  }else{
+    cell.classList.add('err');setTimeout(()=>cell.classList.remove('err'),350);
+    fb(document.getElementById('shFb'),'Это число не запрашивали. Ищи дальше.','bad');
+  }
+}
+document.getElementById('shNew').addEventListener('click',shNew);
+
+/* --- поиск буквы --- */
+const ALPHA='АБВГДЕЖЗИКЛМНОПРСТУФХЦЧШЩ';
+function ltNew(){
+  const cols=DATA[LV].cols, rows=DATA[LV].rows, L=DATA[LV].letter;
+  lt.letter=L; lt.found=0; lt.err=0; lt.locked=false;
+  const box=document.getElementById('ltBox');
+  box.innerHTML='';
+  // целевая буква встречается примерно в 12% ячеек — иначе проба слишком лёгкая
+  const rate=0.12;
+  let total=0;
+  for(let r=0;r<rows;r++){
+    const line=document.createElement('div');line.className='lane';
+    line.style.fontSize='17px';line.style.letterSpacing='3px';line.style.wordSpacing='6px';
+    let html='';
+    for(let c=0;c<cols;c++){
+      const ch=(Math.random()<rate)?L:ALPHA[Math.floor(Math.random()*ALPHA.length)];
+      if(ch===L){total++;html+='<b style="color:var(--gold-lt)">'+ch+'</b>';}
+      else html+=ch;
+    }
+    line.innerHTML=html; box.appendChild(line);
+  }
+  lt.total=total;
+  document.getElementById('ltFound').textContent='0';
+  document.getElementById('ltErr').textContent='0';
+  document.getElementById('ltTime').textContent='0.0';
+  fb(document.getElementById('ltFb'),'Всего букв «'+L+'» в пробе: '+total+'. Засекаю время.','good');
+  clearInterval(lt.timer); lt.t0=Date.now();
+  lt.timer=setInterval(()=>{document.getElementById('ltTime').textContent=((Date.now()-lt.t0)/1000).toFixed(1);},100);
+  // ловим клики по самой букве через выделение текста
+  box.onmouseup=()=>{
+    const sel=window.getSelection();
+    if(!sel||sel.isCollapsed)return;
+    const txt=sel.toString();
+    if(!txt)return;
+    if(txt.indexOf(L)>=0){
+      const n=(txt.match(new RegExp(L,'g'))||[]).length;
+      lt.found+=n;
+      document.getElementById('ltFound').textContent=lt.found;
+      fb(document.getElementById('ltFb'),'Отмечено: '+n+'. Всего найдено '+lt.found+' из '+lt.total+'.','good');
+      if(lt.found>=lt.total){
+        clearInterval(lt.timer);
+        const sec=((Date.now()-lt.t0)/1000).toFixed(1);
+        const pts=Math.max(5,50-parseFloat(sec));
+        score+=pts;done++;
+        fb(document.getElementById('ltFb'),'Все '+lt.total+' найдены за '+sec+' сек. +'+pts+' очков.','good');
+        updateHud();setTimeout(ltNew,1800);
+      }
+    }else{
+      lt.err++;
+      document.getElementById('ltErr').textContent=lt.err;
+      fb(document.getElementById('ltFb'),'Там нет буквы «'+L+'». Ошибок: '+lt.err+'.','bad');
+    }
+    sel.removeAllRanges();
+  };
+}
+document.getElementById('ltNew').addEventListener('click',ltNew);
+
+/* --- N-back --- */
+function nbRestart(){
+  const L='АБВГДЕ';
+  nb.n=DATA[LV].nback; nb.i=0; nb.right=0; nb.wrong=0; nb.done=false;
+  nb.seq=Array.from({length:DATA[LV].nbLen},()=>L[Math.floor(Math.random()*L.length)]);
+  document.getElementById('nbHow').textContent='Буквы идут по одной. Услышав букву, назови ту, что была '
+    +nb.n+' назад. Первые '+nb.n+' букв не считаем — для них ответа ещё нет.';
+  document.getElementById('nbShow').innerHTML='<span class="word" style="font-size:26px">?</span>';
+  document.getElementById('nbOpts').innerHTML='';
+  fb(document.getElementById('nbFb'),'Нажми «Начать». Потом жми ту букву, что была '+nb.n+' назад.','good');
+}
+function nbNext(){
+  if(nb.done)return;
+  if(nb.i>=nb.seq.length){
+    nb.done=true;
+    const tot=nb.right+nb.wrong;
+    const pts=nb.right;
+    score+=pts;done++;
+    fb(document.getElementById('nbFb'),'Готово: верно '+nb.right+' из '+tot+'. +'+pts+' очков.','good');
+    updateHud();setTimeout(nbRestart,2000);return;
+  }
+  const cur=nb.seq[nb.i];
+  const shown=nb.i<nb.n?('Буква '+(nb.i+1)+' из '+nb.seq.length):(cur);
+  document.getElementById('nbShow').innerHTML='<span class="word" style="font-size:26px">'+shown+'</span>';
+  const opts=shuffle([...new Set([cur, ...shuffle('АБВГДЕ'.split('').filter(x=>x!==cur)).slice(0,3)])]);
+  const box=document.getElementById('nbOpts');
+  box.innerHTML=opts.map(o=>'<button type="button" class="opt" data-v="'+o+'">'+o+'</button>').join('');
+  box.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',()=>nbPick(b)));
+  if(nb.i<nb.n)fb(document.getElementById('nbFb'),'Разогрев: эта буква не считается.','good');
+}
+function nbPick(b){
+  if(nb.i<nb.n){nbNext();return;}
+  const right=nb.seq[nb.i-nb.n];
+  const ok=b.dataset.v===right;
+  b.classList.add(ok?'ok':'err');
+  if(ok){nb.right++;}else{nb.wrong++;}
+  setTimeout(()=>{nb.i++;nbNext();},320);
+}
+document.getElementById('nbStart').addEventListener('click',nbNext);
+document.getElementById('nbRestart').addEventListener('click',nbRestart);
+
+/* --- таймер --- */
+function fmt(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
+function tmStart(){
+  clearInterval(tm.t);
+  tm.mode='work'; tm.left=DATA[LV].block;
+  document.getElementById('tmClock').textContent=fmt(tm.left);
+  document.getElementById('tmState').textContent='Блок начался. Держись!';
+  fb(document.getElementById('tmFb'),'Работаем '+DATA[LV].block+' минут.','good');
+  tm.t=setInterval(tmTick,1000);
+}
+function tmTick(){
+  tm.left--;
+  document.getElementById('tmClock').textContent=fmt(Math.max(0,tm.left));
+  if(tm.left<=0){
+    if(tm.mode==='work'){
+      tm.mode='rest'; tm.left=DATA[LV].rest;
+      fb(document.getElementById('tmFb'),'Блок закончен. Отдых '+DATA[LV].rest+' минут.','good');
+      document.getElementById('tmState').textContent='Отдых';
+    }else{
+      clearInterval(tm.t);
+      const pts=10; score+=pts; done++;
+      fb(document.getElementById('tmFb'),'Цикл завершён. +'+pts+' очков.','good');
+      document.getElementById('tmState').textContent='Цикл завершён. Можно начать новый.';
+      updateHud();
+    }
+  }
+}
+function tmPause(){clearInterval(tm.t);document.getElementById('tmState').textContent='Пауза.';}
+function tmStop(){clearInterval(tm.t);tm.left=0;document.getElementById('tmClock').textContent='--:--';
+  document.getElementById('tmState').textContent='Блок не запущен.';fb(document.getElementById('tmFb'),'',' ');}
+document.getElementById('tmStart').addEventListener('click',tmStart);
+document.getElementById('tmPause').addEventListener('click',tmPause);
+document.getElementById('tmStop').addEventListener('click',tmStop);
+
+setLevel('7-10');
+
+</script>
+</body>
+</html>

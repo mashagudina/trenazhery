@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Русский язык · Орфография · 4 класс · Тренажёр</title>
+<style>
+/* ==================================================================
+   ВОЛШЕБНАЯ ШКОЛА · Русский язык 4 класс (орфография)
+   ================================================================== */
+:root{
+  --bg:#0e1330;
+  --card:#1a2050;
+  --card-2:#222a63;
+  --deep:#0b0f26;
+  --soft:#252c66;
+  --ink:#f4e9d0;
+  --dim:#b8c0e0;
+  --line:#39427f;
+  --gold:#f0b429;
+  --gold-lt:#ffd166;
+  --wine:#a83246;
+  --ok:#48c98e;
+  --ok-bg:#16452f;
+  --bad:#e8604f;
+  --bad-bg:#4a1d1a;
+  --ink-on-gold:#2a1f05;
+  --shadow:0 10px 30px rgba(0,0,0,.45);
+  --glow:0 0 0 1px rgba(255,209,102,.22), 0 8px 30px rgba(240,180,41,.22);
+}
+html[data-theme="light"]{
+  --bg:#f6eedb;
+  --card:#fffdf6;
+  --card-2:#fdf4e0;
+  --deep:#fffdf6;
+  --soft:#f4e8cd;
+  --ink:#2b2415;
+  --dim:#6d6150;
+  --line:#dfd0b0;
+  --gold:#b8791a;
+  --gold-lt:#e8b23d;
+  --wine:#7b1e2b;
+  --ok:#2f8a5f;
+  --ok-bg:#e3f4ec;
+  --bad:#c0392b;
+  --bad-bg:#fbeceb;
+  --ink-on-gold:#fffdf6;
+  --shadow:0 8px 24px rgba(90,60,10,.16);
+  --glow:0 0 0 1px rgba(184,121,26,.3), 0 8px 26px rgba(184,121,26,.2);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:"Segoe UI",Arial,sans-serif;
+  background:
+    radial-gradient(1000px 600px at 80% -10%, rgba(255,209,102,.18), transparent 62%),
+    radial-gradient(760px 520px at 4% 106%, rgba(129,116,224,.20), transparent 60%),
+    var(--bg);
+  background-attachment:fixed;
+  color:var(--ink);font-size:17px;
+  min-height:100vh;overflow-x:hidden;
+  padding-bottom:calc(24px + env(safe-area-inset-bottom));
+}
+html[data-theme="light"] body{
+  background:
+    radial-gradient(1000px 560px at 82% -12%, rgba(232,178,61,.32), transparent 60%),
+    radial-gradient(760px 520px at 2% 104%, rgba(123,30,43,.15), transparent 60%),
+    var(--bg);
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    radial-gradient(1.7px 1.7px at 12% 16%,#fff9,transparent),
+    radial-gradient(1.5px 1.5px at 27% 62%,#fff8,transparent),
+    radial-gradient(1.8px 1.8px at 44% 9%,#fff9,transparent),
+    radial-gradient(1.3px 1.3px at 58% 41%,#fff7,transparent),
+    radial-gradient(1.6px 1.6px at 71% 24%,#fff9,transparent),
+    radial-gradient(1.2px 1.2px at 86% 57%,#fff7,transparent);
+  animation:twinkle 5.5s ease-in-out infinite alternate;
+}
+html[data-theme="light"] body::before{opacity:.3}
+@keyframes twinkle{from{opacity:.5}to{opacity:1}}
+
+.candles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.candle{position:absolute;width:9px;height:38px;border-radius:5px 5px 3px 3px;
+  background:linear-gradient(180deg,#fdf3dc,#c9b78c);opacity:.5;animation:floatY 10s ease-in-out infinite}
+.candle::before{content:"";position:absolute;left:50%;bottom:100%;margin-bottom:2px;
+  width:8px;height:14px;border-radius:50% 50% 46% 46%;
+  background:radial-gradient(circle at 50% 72%, #fff6d2, var(--gold-lt));
+  box-shadow:0 0 22px 8px rgba(255,209,102,.5);animation:flicker 1.7s ease-in-out infinite alternate}
+.candle::after{content:"";position:absolute;left:50%;bottom:100%;transform:translateX(-50%);
+  width:160px;height:160px;border-radius:50%;
+  background:radial-gradient(circle, rgba(255,209,102,.18), transparent 68%)}
+.c1{left:5%;top:24%;animation-duration:11s}
+.c2{right:8%;top:14%;animation-duration:13s;animation-delay:-4s}
+.c3{left:91%;top:72%;animation-duration:15s;animation-delay:-8s;transform:scale(.78)}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+@keyframes flicker{from{transform:translateX(-50%) scaleY(1);opacity:.8}to{transform:translateX(-50%) scaleY(1.2) scaleX(1.06);opacity:1}}
+
+header{
+  position:relative;z-index:1;
+  background:linear-gradient(135deg, var(--wine), #6d1f2e);
+  padding:18px;text-align:center;border-bottom:2px solid var(--gold);
+  box-shadow:0 6px 24px rgba(0,0,0,.45);
+}
+header h1{margin:0;font-size:25px;color:#fff3d6;text-shadow:0 2px 8px rgba(0,0,0,.5)}
+header p{margin:5px 0 0;font-size:14px;color:#f2d9a8;opacity:.95}
+.tgl{position:absolute;right:14px;top:14px;background:transparent;
+  border:1px solid rgba(255,243,214,.5);color:#fff3d6;border-radius:20px;
+  padding:6px 13px;font-size:13px;cursor:pointer;font-family:inherit;min-height:32px}
+.tgl:hover{background:rgba(255,243,214,.14)}
+html[data-theme="light"] .tgl{border-color:var(--line);color:var(--wine)}
+
+main{position:relative;z-index:1;max-width:680px;margin:18px auto;padding:0 14px}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:18px;
+  padding:22px;margin-bottom:18px;box-shadow:var(--shadow);
+}
+h2{margin:0 0 14px;font-size:21px;color:var(--gold-lt);line-height:1.4}
+
+/* прогресс */
+.progress{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.bar{flex:1;height:12px;border-radius:999px;background:var(--deep);overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;width:0;border-radius:999px;
+  background:linear-gradient(90deg,var(--gold),var(--gold-lt));
+  box-shadow:0 0 10px rgba(255,209,102,.5);transition:width .3s}
+.ptext{font-size:15px;color:var(--gold-lt);font-weight:700;white-space:nowrap}
+.dots{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.dot{width:12px;height:12px;border-radius:50%;background:var(--deep);border:1px solid var(--line)}
+.dot.on{background:var(--ok);border-color:var(--ok);box-shadow:0 0 8px rgba(72,201,142,.6)}
+
+/* слово с пропуском */
+.word{font-size:52px;font-weight:800;text-align:center;letter-spacing:3px;
+  margin:12px 0 20px;color:var(--ink)}
+.word .gap{display:inline-block;min-width:.7em;border-bottom:5px solid var(--gold);color:var(--gold-lt)}
+.word .gap.ok{color:var(--ok);border-color:var(--ok)}
+.word .gap.bad{color:var(--bad);border-color:var(--bad)}
+
+/* ответы */
+.answers{display:grid;gap:11px;margin-top:14px}
+.answers.choices{grid-template-columns:1fr 1fr}
+.opt{
+  display:flex;align-items:center;gap:11px;width:100%;padding:14px;
+  border:2px solid var(--line);border-radius:14px;background:var(--deep);
+  cursor:pointer;font-size:18px;font-family:inherit;color:var(--ink);text-align:left;
+  min-height:58px;transition:border-color .15s, background .15s, transform .12s;
+}
+.opt:hover:not(:disabled){border-color:var(--gold-lt);transform:translateX(3px)}
+.opt .key{
+  flex:0 0 32px;height:32px;border-radius:9px;background:var(--soft);color:var(--gold-lt);
+  display:flex;align-items:center;justify-content:center;font-weight:800;
+}
+.opt.ok{border-color:var(--ok);background:var(--ok-bg);color:var(--ok)}
+.opt.ok .key{background:var(--ok);color:#08281a}
+.opt.bad{border-color:var(--bad);background:var(--bad-bg);color:var(--bad)}
+.opt.bad .key{background:var(--bad);color:#2a0d0a}
+.opt.dim{opacity:.42}
+.opt:disabled{cursor:default}
+.opt .mark{margin-left:auto;font-size:19px;font-weight:800}
+
+/* пояснение */
+.feedback{min-height:104px;margin-top:14px}
+.verdict{font-size:19px;font-weight:800;display:flex;align-items:center;gap:9px}
+.verdict.ok{color:var(--ok)}
+.verdict.bad{color:var(--bad)}
+.explain{margin-top:8px;padding:12px 14px;border-left:5px solid var(--gold);
+  border-radius:0 10px 10px 0;background:var(--card-2);
+  font-size:17px;line-height:1.5;color:var(--ink)}
+
+/* кнопка дальше */
+.next{
+  margin-top:14px;width:100%;padding:15px;border:none;border-radius:14px;
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold));color:var(--ink-on-gold);
+  font-size:18px;font-weight:800;cursor:pointer;font-family:inherit;min-height:56px;
+  box-shadow:0 4px 18px rgba(240,180,41,.34);
+  animation:breathe 3.8s ease-in-out infinite;
+  transition:transform .12s, filter .2s;
+}
+.next:hover{filter:brightness(1.07);transform:translateY(-2px)}
+.next:active{transform:scale(.98)}
+@keyframes breathe{
+  0%,100%{box-shadow:0 4px 18px rgba(240,180,41,.28)}
+  50%{box-shadow:0 6px 30px rgba(240,180,41,.55)}
+}
+:focus-visible{outline:3px solid var(--gold-lt);outline-offset:2px;border-radius:8px}
+
+/* итог */
+.scoreBox{text-align:center;padding:8px 0 16px}
+.bigscore{font-size:64px;font-weight:800;color:var(--gold-lt);
+  text-shadow:0 0 30px rgba(240,180,41,.4)}
+html[data-theme="light"] .bigscore{text-shadow:none;color:var(--wine)}
+.stars{font-size:34px;letter-spacing:5px}
+.advice{font-size:18px;margin-top:10px;color:var(--ink)}
+.mistake{margin-top:12px;padding:14px;border:1px solid var(--line);
+  border-left:5px solid var(--bad);border-radius:12px;background:var(--card-2)}
+.mistake .t{font-weight:700;color:var(--ink)}
+.mistake .r{color:var(--gold-lt)}
+html[data-theme="light"] .mistake .r{color:var(--wine)}
+
+.parents{
+  position:relative;z-index:1;margin-top:18px;
+  background:var(--card-2);border:1px dashed var(--line);border-radius:14px;
+  padding:16px 18px;font-size:15px;line-height:1.5;color:var(--dim);
+}
+.parents b{color:var(--gold-lt)}
+.footer{position:relative;z-index:1;text-align:center;color:var(--dim);
+  font-size:13px;margin:16px 0 8px;opacity:.75}
+.hidden{display:none}
+
+.rv{opacity:0;transform:translateY(18px);transition:opacity .55s ease, transform .55s ease}
+.rv.in{opacity:1;transform:none}
+
+@media (max-width:480px){
+  .answers.choices{grid-template-columns:1fr}
+  .word{font-size:42px}
+  .card{padding:18px 16px}
+  .tgl{position:static;display:block;margin:10px auto 0}
+  .candle.c3{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none !important;animation:none !important}
+  body::before{animation:none}
+  .rv{opacity:1;transform:none}
+}
+@media print{
+  :root{
+    --bg:#fff;--card:#fff;--card-2:#fff;--soft:#fff;--deep:#fff;
+    --ink:#1a1a1a;--line:#000;--gold:#000;--gold-lt:#333;--wine:#555;
+    --ok-bg:#fff;--bad-bg:#fff;--ink-on-gold:#000;
+  }
+  html,body{background:#fff !important;color:#1a1a1a !important}
+  body::before,.candles,.tgl,.next{display:none !important}
+  *,*::before,*::after{background-image:none !important;text-shadow:none !important;
+    box-shadow:none !important;animation:none !important;transition:none !important;
+    color:#1a1a1a !important;border-color:#000 !important}
+  .card{border:.4pt solid #000;border-radius:0}
+}
+
+</style>
+</head>
+<body>
+<header>
+  <h1>🚀 Орфография · 4 класс</h1>
+  <p>Падежные окончания · спряжение глаголов · -тся/-ться · окончания прилагательных</p>
+</header>
+<main>
+  <section class="card" id="quizCard">
+    <div class="progress">
+      <div class="bar"><i id="barFill"></i></div>
+      <div class="ptext" id="progressText">1 · 10</div>
+    </div>
+    <div class="dots" id="dots"></div>
+    <h2 id="questionText">Загрузка...</h2>
+    <div id="answers" class="answers"></div>
+    <div class="feedback" id="feedback" aria-live="polite">
+      <div class="verdict" id="verdict"></div>
+      <div class="explain" id="explain"></div>
+    </div>
+    <button class="next hidden" id="next" type="button">Следующий вопрос</button>
+  </section>
+
+  <section class="card hidden" id="resultCard">
+    <div class="scoreBox">
+      <div class="stars" id="stars"></div>
+      <div class="bigscore" id="bigscore"></div>
+      <div class="advice" id="adviceText"></div>
+    </div>
+    <h2>Разбор ошибок</h2>
+    <div id="mistakes"></div>
+    <button class="next" id="restart" type="button">🔄 Пройти ещё раз</button>
+  </section>
+
+  <div class="parents">
+    <b>Для родителей.</b> Тренируем орфограммы 4 класса: безударные падежные окончания имён
+    существительных и прилагательных, личные окончания глаголов (спряжение) и выбор -тся/-ться.
+    Спрашивайте у ребёнка вопрос падежа и начальную форму глагола.
+  </div>
+  <div class="footer">Сделано для Марии · Склонение и спряжение — с опорой на вопросы</div>
+</main>
+
+<script>
+/* --- оживление: тема, свечи, появление блоков --- */
+/* ==================================================================
+   ОЖИВЛЕНИЕ · тренажёры скорочтения
+   ================================================================== */
+(function(){
+  "use strict";
+  var calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var html = document.documentElement;
+
+  /* ---- 1. Ночь по умолчанию, запоминаем выбор ---- */
+  var saved = null;
+  try { saved = localStorage.getItem('tr-theme'); } catch(e){}
+  if(saved === 'light' || saved === 'dark') html.setAttribute('data-theme', saved);
+
+  /* ---- 2. Кнопка переключения темы в шапке ---- */
+  var head = document.querySelector('header');
+  if(head){
+    var t = document.createElement('button');
+    t.className = 'tgl'; t.id = 'tgl'; t.type = 'button';
+    function label(){
+      t.textContent = html.getAttribute('data-theme') === 'light' ? 'Ночная тема' : 'Светлая тема';
+    }
+    label();
+    t.addEventListener('click', function(){
+      var next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      html.setAttribute('data-theme', next);
+      try { localStorage.setItem('tr-theme', next); } catch(e){}
+      label();
+    });
+    head.appendChild(t);
+  }
+
+  /* ---- 3. Свечи ---- */
+  if(!calm){
+    var box = document.createElement('div');
+    box.className = 'candles';
+    box.setAttribute('aria-hidden','true');
+    box.innerHTML = '<span class="candle c1"></span>' +
+                    '<span class="candle c2"></span>' +
+                    '<span class="candle c3"></span>';
+    document.body.appendChild(box);
+  }
+
+  /* ---- 4. Появление карточек при прокрутке ---- */
+  var cards = document.querySelectorAll('.card');
+  if(calm || !('IntersectionObserver' in window)){
+    Array.prototype.forEach.call(cards, function(el){ el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.06, rootMargin: '0px 0px -30px 0px' });
+    Array.prototype.forEach.call(cards, function(el){ el.classList.add('rv'); io.observe(el); });
+  }
+})();
+</script>
+
+<script>
+const questions = [
+  {
+    type: 'letters',
+    text: 'Вставь пропущенное окончание (предложный падеж):',
+    word: 'на берёз_',
+    options: ['е', 'и', 'э', 'я'],
+    correct: 0,
+    explain: 'На берёзе. Существительное берёза — 1 склонение. В предложном падеже пишем Е.'
+  },
+  {
+    type: 'letters',
+    text: 'Вставь пропущенное окончание (предложный падеж):',
+    word: 'в тетрад_',
+    options: ['е', 'и', 'ё', 'ы'],
+    correct: 1,
+    explain: 'В тетради. Тетрадь — 3 склонение. В предложном падеже пишем И.'
+  },
+  {
+    type: 'letters',
+    text: 'Вставь пропущенное окончание (предложный падеж):',
+    word: 'на пол_',
+    options: ['е', 'и', 'ё', 'а'],
+    correct: 0,
+    explain: 'На поле. Поле — 2 склонение. В предложном падеже пишем Е.'
+  },
+  {
+    type: 'letters',
+    text: 'Вставь пропущенное окончание глагола:',
+    word: 'он пиш_т',
+    options: ['е', 'и', 'ё', 'а'],
+    correct: 0,
+    explain: 'Он пишет. Глагол писать — I спряжение (начальная форма на -АТЬ). В 3-м лице пишем ЕТ.'
+  },
+  {
+    type: 'letters',
+    text: 'Вставь пропущенное окончание глагола:',
+    word: 'он смотр_т',
+    options: ['е', 'и', 'ё', 'ы'],
+    correct: 1,
+    explain: 'Он смотрит. Смотреть — глагол-исключение на -ЕТЬ, II спряжение. Пишем ИТ.'
+  },
+  {
+    type: 'letters',
+    text: 'Вставь пропущенное окончание глагола:',
+    word: 'ты чита_шь',
+    options: ['е', 'и', 'ё', 'а'],
+    correct: 0,
+    explain: 'Ты читаешь. Читать — I спряжение. Во 2-м лице пишем окончание ЕШЬ.'
+  },
+  {
+    type: 'correct',
+    text: 'Как правильно закончить предложение?',
+    options: ['Мальчик часто купается', 'Мальчик часто купаться', 'Мальчик часто купаяца', 'Мальчик часто купаетса'],
+    correct: 0,
+    explain: 'Купается. Вопрос «что делает?» — в вопросе нет Ь, значит и в слове нет Ь: -тся.'
+  },
+  {
+    type: 'correct',
+    text: 'Как правильно закончить предложение?',
+    options: ['Летом надо купаться', 'Летом надо купается', 'Летом надо купаится', 'Летом надо купаетса'],
+    correct: 0,
+    explain: 'Надо (что делать?) купаться. В вопросе есть Ь — в слове тоже пишем Ь: -ться.'
+  },
+  {
+    type: 'letters',
+    text: 'Вставь пропущенное окончание прилагательного:',
+    word: 'за высок_м',
+    options: ['и', 'е', 'ы', 'я'],
+    correct: 0,
+    explain: 'За высоким. Творительный падеж: за каким? высоким. Окончание -ИМ.'
+  },
+  {
+    type: 'find',
+    text: 'Найди словосочетание с ошибкой:',
+    options: ['на берёзе', 'в тетраде', 'на поле', 'о маме'],
+    correct: 1,
+    explain: 'В тетраде — ошибка! Правильно: в тетрадИ, ведь тетрадь — 3 склонение.'
+  }
+];
+
+let index = 0;
+let score = 0;
+let answered = false;
+const flags = [];
+
+const $ = id => document.getElementById(id);
+const quizCard = $('quizCard');
+const resultCard = $('resultCard');
+const questionText = $('questionText');
+const answers = $('answers');
+const feedback = $('feedback');
+const verdict = $('verdict');
+const explain = $('explain');
+const next = $('next');
+const barFill = $('barFill');
+const progressText = $('progressText');
+const dots = $('dots');
+
+const KEYS = ['А', 'Б', 'В', 'Г'];
+
+function shuffle(a){
+  const x = a.slice();
+  for(let i=x.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [x[i],x[j]]=[x[j],x[i]]; }
+  return x;
+}
+
+function renderDots(){
+  dots.innerHTML = questions.map((_,i)=>
+    `<span class="dot ${i<index?'on':''}" title="Вопрос ${i+1}"></span>`).join('');
+  barFill.style.width = (index/questions.length*100)+'%';
+  progressText.textContent = `${Math.min(index+1,questions.length)} · ${questions.length}`;
+}
+
+function makeOpt(q, i){
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'opt';
+  b.innerHTML = `<span class="key">${KEYS[i]}</span><span>${q.options[i]}</span>`;
+  b.addEventListener('click', () => checkAnswer(q, i, b));
+  return b;
+}
+
+function renderQuestion(){
+  answered = false;
+  const q = questions[index];
+  renderDots();
+  questionText.textContent = q.text;
+  feedback.className = 'feedback';
+  verdict.textContent = '';
+  verdict.className = 'verdict';
+  explain.textContent = '';
+  next.classList.add('hidden');
+  next.textContent = index === questions.length-1 ? 'Показать результат' : 'Следующий вопрос';
+
+  if(q.type === 'letters'){
+    const parts = q.word.split('_');
+    const wordEl = document.createElement('div');
+    wordEl.className = 'word';
+    wordEl.id = 'word';
+    wordEl.innerHTML = parts.join('<span class="gap" id="gap">?</span>');
+    const wrap = document.createElement('div');
+    wrap.style.marginTop = '14px';
+    answers.className = 'answers choices';
+    answers.innerHTML = '';
+    answers.appendChild(wordEl);
+    const row = document.createElement('div');
+    row.style.display = 'grid';
+    row.style.gridTemplateColumns = `repeat(${Math.min(q.options.length,4)},1fr)`;
+    row.style.gap = '10px';
+    q.options.forEach((_, i) => row.appendChild(makeOpt(q, i)));
+    wrap.appendChild(row);
+    answers.appendChild(wrap);
+  } else {
+    answers.className = 'answers choices';
+    answers.innerHTML = '';
+    q.options.forEach((_, i) => answers.appendChild(makeOpt(q, i)));
+  }
+}
+
+function markButtons(q, chosen){
+  const opts = Array.from(answers.querySelectorAll('.opt'));
+  opts.forEach((b, i) => {
+    b.disabled = true;
+    if(i === q.correct) b.classList.add('ok');
+    else if(i === chosen) b.classList.add('bad');
+    else b.classList.add('dim');
+  });
+  const mark = i => {
+    const b = opts[i];
+    if(!b) return;
+    const m = document.createElement('span');
+    m.className = 'mark';
+    m.textContent = (i === q.correct) ? '✓' : (i === chosen ? '✗' : '');
+    b.appendChild(m);
+  };
+  opts.forEach((_, i) => mark(i));
+}
+
+function checkAnswer(q, i, btn){
+  if(answered) return;
+  answered = true;
+  const ok = i === q.correct;
+  if(ok) score++;
+  flags[index] = ok;
+
+  if(q.type === 'letters'){
+    const gap = document.getElementById('gap');
+    if(gap){
+      gap.textContent = q.options[i];
+      gap.classList.add(ok ? 'ok' : 'bad');
+    }
+  }
+  markButtons(q, i);
+
+  verdict.textContent = ok ? 'Верно! ✓' : 'Пока не совсем. ✗';
+  verdict.className = 'verdict ' + (ok ? 'ok' : 'bad');
+  explain.textContent = q.explain;
+  next.classList.remove('hidden');
+  next.focus();
+}
+
+function showResult(){
+  quizCard.classList.add('hidden');
+  resultCard.classList.remove('hidden');
+  const total = questions.length;
+  const pct = score/total;
+  const starsCount = Math.round(pct*5);
+  $('stars').textContent = '★'.repeat(starsCount) + '☆'.repeat(5-starsCount);
+  $('bigscore').textContent = `${score} из ${total}`;
+  const advice = score===total
+    ? 'Отлично, всё верно! Ты отлично знаешь правила. 🌟'
+    : pct>=0.7
+      ? 'Молодец! Почти всё получилось, повтори ошибки ниже. 👏'
+      : pct>=0.5
+        ? 'Хорошая работа! Вместе повтори правила и пройди ещё раз. 💪'
+        : 'Ничего страшного! Прочитай правила и обязательно получится. 🌱';
+  $('adviceText').textContent = advice;
+
+  const mbox = $('mistakes');
+  mbox.innerHTML = '';
+  questions.forEach((q, i) => {
+    if(flags[i]) return;
+    const div = document.createElement('div');
+    div.className = 'mistake';
+    const wordOrText = q.type === 'letters' ? q.word.replace('_', '…') : q.options[q.correct];
+    div.innerHTML = `<span class="t">Вопрос ${i+1}. ${q.text}</span><br>${wordOrText}<br><span class="r">${q.explain}</span>`;
+    mbox.appendChild(div);
+  });
+  if(!mbox.innerHTML) mbox.innerHTML = 'Ошибок нет — молодец!';
+}
+
+function restart(){
+  index = 0;
+  score = 0;
+  flags.length = 0;
+  resultCard.classList.add('hidden');
+  quizCard.classList.remove('hidden');
+  renderQuestion();
+}
+
+next.addEventListener('click', () => {
+  index++;
+  if(index >= questions.length) showResult();
+  else renderQuestion();
+});
+$('restart').addEventListener('click', restart);
+
+document.addEventListener('keydown', e => {
+  if(e.key >= '1' && e.key <= '4' && !answered){
+    const opts = Array.from(answers.querySelectorAll('.opt'));
+    if(opts[e.key-1]) opts[e.key-1].click();
+  }
+  if(e.key === 'Enter' && answered && !next.classList.contains('hidden')) next.click();
+});
+
+renderQuestion();
+</script>
+</body>
+</html>

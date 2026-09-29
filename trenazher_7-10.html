@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Скорочтение 7–10 · Тренажёр</title>
+<style>
+/* ==================================================================
+   ВОЛШЕБНАЯ ШКОЛА · тренажёры скорочтения (7–10 / 11–13 / 14–17 / 18+)
+   Ночь по умолчанию. Светлая тема — пергамент, переключается кнопкой.
+   ================================================================== */
+:root{
+  --bg:#0e1330;
+  --card:#1a2050;
+  --card-2:#222a63;
+  --deep:#0b0f26;
+  --soft:#252c66;
+  --ink:#f4e9d0;
+  --dim:#b8c0e0;
+  --line:#39427f;
+  --gold:#f0b429;
+  --gold-lt:#ffd166;
+  --wine:#a83246;
+  --ok:#48c98e;
+  --bad:#e8604f;
+  --accent:var(--gold);
+  --ink-on-gold:#2a1f05;
+  --shadow:0 10px 30px rgba(0,0,0,.45);
+  --glow:0 0 0 1px rgba(255,209,102,.22), 0 8px 30px rgba(240,180,41,.22);
+}
+html[data-theme="light"]{
+  --bg:#f6eedb;
+  --card:#fffdf6;
+  --card-2:#fdf4e0;
+  --deep:#fffdf6;
+  --soft:#f4e8cd;
+  --ink:#2b2415;
+  --dim:#6d6150;
+  --line:#dfd0b0;
+  --gold:#b8791a;
+  --gold-lt:#e8b23d;
+  --wine:#7b1e2b;
+  --ok:#2f8a5f;
+  --bad:#c0392b;
+  --ink-on-gold:#fffdf6;
+  --shadow:0 8px 24px rgba(90,60,10,.16);
+  --glow:0 0 0 1px rgba(184,121,26,.3), 0 8px 26px rgba(184,121,26,.2);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:"Segoe UI",Arial,sans-serif;
+  background:
+    radial-gradient(1100px 620px at 80% -10%, rgba(255,209,102,.18), transparent 62%),
+    radial-gradient(820px 560px at 4% 106%, rgba(129,116,224,.20), transparent 60%),
+    var(--bg);
+  background-attachment:fixed;
+  color:var(--ink);font-size:17px;
+  overflow-x:hidden;min-height:100vh;
+  padding-bottom:calc(24px + env(safe-area-inset-bottom));
+  -webkit-text-size-adjust:100%;
+}
+html[data-theme="light"] body{
+  background:
+    radial-gradient(1000px 560px at 82% -12%, rgba(232,178,61,.32), transparent 60%),
+    radial-gradient(760px 520px at 2% 104%, rgba(123,30,43,.15), transparent 60%),
+    var(--bg);
+}
+/* звёзды */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    radial-gradient(1.7px 1.7px at 12% 16%,#fff9,transparent),
+    radial-gradient(1.5px 1.5px at 27% 62%,#fff8,transparent),
+    radial-gradient(1.8px 1.8px at 44% 9%,#fff9,transparent),
+    radial-gradient(1.3px 1.3px at 58% 41%,#fff7,transparent),
+    radial-gradient(1.6px 1.6px at 71% 24%,#fff9,transparent),
+    radial-gradient(1.2px 1.2px at 86% 57%,#fff7,transparent),
+    radial-gradient(1.3px 1.3px at 35% 88%,#fff7,transparent),
+    radial-gradient(1.5px 1.5px at 64% 79%,#fff8,transparent);
+  animation:twinkle 5.5s ease-in-out infinite alternate;
+}
+html[data-theme="light"] body::before{opacity:.3}
+@keyframes twinkle{from{opacity:.5}to{opacity:1}}
+
+/* свечи */
+.candles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.candle{
+  position:absolute;width:9px;height:38px;border-radius:5px 5px 3px 3px;
+  background:linear-gradient(180deg,#fdf3dc,#c9b78c);opacity:.55;
+  animation:floatY 10s ease-in-out infinite;
+}
+.candle::before{
+  content:"";position:absolute;left:50%;bottom:100%;margin-bottom:2px;
+  width:8px;height:14px;border-radius:50% 50% 46% 46%;
+  background:radial-gradient(circle at 50% 72%, #fff6d2, var(--gold-lt));
+  box-shadow:0 0 22px 8px rgba(255,209,102,.5);
+  animation:flicker 1.7s ease-in-out infinite alternate;
+}
+.candle::after{
+  content:"";position:absolute;left:50%;bottom:100%;transform:translateX(-50%);
+  width:160px;height:160px;border-radius:50%;
+  background:radial-gradient(circle, rgba(255,209,102,.18), transparent 68%);
+}
+.c1{left:5%;top:22%;animation-duration:11s}
+.c2{right:8%;top:14%;animation-duration:13s;animation-delay:-4s}
+.c3{left:90%;top:70%;animation-duration:15s;animation-delay:-8s;transform:scale(.78)}
+html[data-theme="light"] .candle{opacity:.38}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+@keyframes flicker{from{transform:translateX(-50%) scaleY(1);opacity:.8}to{transform:translateX(-50%) scaleY(1.2) scaleX(1.06);opacity:1}}
+
+/* шапка */
+header{
+  position:relative;z-index:1;
+  background:linear-gradient(135deg, var(--wine), #6d1f2e);
+  padding:16px 18px;text-align:center;
+  border-bottom:2px solid var(--gold);
+  box-shadow:0 6px 24px rgba(0,0,0,.45);
+}
+header h1{margin:0;font-size:25px;color:#fff3d6;text-shadow:0 2px 8px rgba(0,0,0,.5)}
+header p{margin:5px 0 0;font-size:14px;color:#f2d9a8;opacity:.95}
+.tgl{
+  position:absolute;right:14px;top:14px;
+  background:transparent;border:1px solid rgba(255,243,214,.5);color:#fff3d6;
+  border-radius:20px;padding:6px 13px;font-size:13px;cursor:pointer;
+  font-family:inherit;min-height:32px;
+}
+.tgl:hover{background:rgba(255,243,214,.14)}
+html[data-theme="light"] .tgl{border-color:var(--line);color:var(--wine)}
+
+main{position:relative;z-index:1;max-width:760px;margin:18px auto;padding:0 14px}
+
+/* карточки */
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:18px;
+  padding:20px;margin-bottom:20px;box-shadow:var(--shadow);
+  transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.card:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:var(--glow),var(--shadow)}
+h2{
+  margin:0 0 12px;font-size:20px;color:var(--gold-lt);
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+h2::after{content:"";flex:1;height:1px;min-width:30px;
+  background:linear-gradient(90deg,var(--line),transparent)}
+p{margin:6px 0;color:var(--dim)}
+
+/* переключатели размера */
+.tab{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.tab button{
+  border:1px solid var(--line);background:var(--soft);color:var(--ink);
+  padding:9px 18px;border-radius:20px;font-size:15px;cursor:pointer;
+  font-family:inherit;min-height:42px;transition:.15s;
+}
+.tab button:hover{border-color:var(--gold-lt)}
+.tab button.on{
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold));
+  color:var(--ink-on-gold);border-color:transparent;font-weight:700;
+}
+
+/* кнопки */
+.btn{
+  border:none;border-radius:20px;padding:12px 22px;font-size:16px;cursor:pointer;
+  font-family:inherit;min-height:48px;
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold));
+  color:var(--ink-on-gold);font-weight:700;
+  box-shadow:0 4px 16px rgba(240,180,41,.32);
+  animation:breathe 3.8s ease-in-out infinite;
+  transition:transform .14s ease, filter .2s;
+}
+.btn:hover{filter:brightness(1.07);transform:translateY(-2px)}
+.btn.ghost{
+  background:var(--card);border:2px solid var(--line);color:var(--gold-lt);
+  box-shadow:none;animation:none;font-weight:700;
+}
+.btn.ghost:hover{border-color:var(--gold-lt);background:var(--soft)}
+.btn:active{transform:scale(.97)}
+@keyframes breathe{
+  0%,100%{box-shadow:0 4px 16px rgba(240,180,41,.28)}
+  50%{box-shadow:0 6px 28px rgba(240,180,41,.52)}
+}
+:focus-visible{outline:3px solid var(--gold-lt);outline-offset:2px;border-radius:8px}
+
+/* таблица Шульте */
+.grid{
+  display:grid;gap:6px;margin:14px 0;user-select:none;
+  padding:8px;border-radius:14px;
+  background:var(--card-2);border:1px solid var(--line);
+}
+.cell{
+  background:var(--deep, var(--soft));
+  color:var(--ink);
+  border:1px solid var(--line);
+  border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-weight:700;cursor:pointer;font-size:22px;aspect-ratio:1;
+  transition:background .15s, transform .12s, box-shadow .2s;
+}
+.cell:hover{transform:scale(1.05);border-color:var(--gold-lt)}
+.cell.sel{
+  background:linear-gradient(180deg,#5fdba0,var(--ok));color:#08281a;
+  border-color:transparent;box-shadow:0 0 18px rgba(72,201,142,.55);
+  animation:pop .28s ease;
+}
+.cell.err{
+  background:linear-gradient(180deg,#ef7a68,var(--bad));color:#2a0d0a;
+  border-color:transparent;box-shadow:0 0 18px rgba(232,96,79,.55);
+  animation:shake .3s ease;
+}
+@keyframes pop{from{transform:scale(.7)}to{transform:scale(1.07)}}
+@keyframes shake{
+  0%,100%{transform:translateX(0)}
+  25%{transform:translateX(-5px)}75%{transform:translateX(5px)}
+}
+
+/* дорожки и тексты */
+.lane{
+  font-size:24px;letter-spacing:1px;
+  background:var(--card-2);border:1px solid var(--line);border-radius:12px;
+  padding:12px;margin:8px 0;text-align:center;color:var(--ink);
+}
+.reading{
+  background:var(--card-2);border:1px solid var(--line);border-radius:14px;
+  padding:18px;font-size:20px;line-height:1.7;color:var(--ink);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
+}
+.columns{
+  column-count:3;column-gap:1.4em;
+  background:var(--card-2);border:1px solid var(--line);border-radius:14px;
+  padding:18px;font-size:17px;line-height:1.6;color:var(--ink);
+}
+textarea{
+  width:100%;height:150px;font-size:16px;
+  background:var(--card-2);color:var(--ink);
+  border:1px solid var(--line);border-radius:10px;padding:10px;font-family:inherit;
+}
+.timer{font-size:22px;font-weight:800;color:var(--gold-lt);font-variant-numeric:tabular-nums}
+.stat{display:flex;gap:14px;font-size:15px;color:var(--gold-lt);font-weight:600;margin:6px 0}
+
+/* инлайновые стили в исходнике — перебиваем, иначе остаётся светлый фон */
+input[type="number"]{
+  background:var(--card-2) !important;color:var(--ink) !important;
+  border:1px solid var(--line) !important;
+}
+table{border-collapse:collapse;width:100%}
+table th,table td{padding:7px 8px;text-align:left;border-bottom:1px solid var(--line)}
+table th{color:var(--gold-lt);font-weight:700}
+table tr[style] th{background:var(--soft) !important}
+table tr[style] td{background:transparent !important}
+[style*="color:#8a6a4a"]{color:var(--gold-lt) !important}
+[style*="color:var(--main)"]{color:var(--gold-lt) !important}
+
+.hidden{display:none}
+.footer{
+  position:relative;z-index:1;text-align:center;color:var(--dim);
+  font-size:13px;margin:20px 0;opacity:.75;
+}
+
+/* появление блоков при прокрутке */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .55s ease, transform .55s ease}
+.rv.in{opacity:1;transform:none}
+
+/* адаптив */
+@media (max-width:520px){
+  body{font-size:16px}
+  header h1{font-size:21px}
+  .card{padding:16px 14px}
+  .btn{width:100%}
+  .reading{font-size:18px;padding:14px}
+  .columns{column-count:2}
+  .tgl{position:static;display:block;margin:10px auto 0}
+  .candle.c3{display:none}
+}
+
+/* печать: инверсия обязательна, иначе белый текст на белом листе */
+@media print{
+  :root{
+    --bg:#fff;--card:#fff;--card-2:#fff;--soft:#fff;--deep:#fff;
+    --ink:#1a1a1a;--line:#000;--gold:#000;--gold-lt:#333;--wine:#555;
+    --ink-on-gold:#000;
+  }
+  html,body{background:#fff !important;color:#1a1a1a !important}
+  body::before,.candles,.tgl{display:none !important}
+  *,*::before,*::after{
+    background-image:none !important;text-shadow:none !important;
+    box-shadow:none !important;animation:none !important;transition:none !important;
+    color:#1a1a1a !important;border-color:#000 !important;
+  }
+  .card{border:.4pt solid #000;border-radius:0;transform:none}
+  .grid{border:.4pt solid #000}
+  .cell{border:.4pt solid #000;background:#fff !important}
+  .btn{display:none !important}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none !important;animation:none !important}
+  body::before{animation:none}
+  .rv{opacity:1;transform:none}
+}
+
+</style>
+</head>
+<body>
+<header>
+  <h1>🚀 Тренажёр скорочтения</h1>
+  <p>7–10 лет · Таблица Шульте · Слоговые дорожки · Замер скорости</p>
+</header>
+<main>
+
+  <!-- Таблица Шульте -->
+  <div class="card">
+    <h2>👁 Таблица Шульте</h2>
+    <p>Найди глазами все числа по порядку как можно быстрее. Головой не крутить!</p>
+    <div class="tab">
+      <button data-size="3">3×3</button>
+      <button data-size="4" class="on">4×4</button>
+      <button data-size="5">5×5</button>
+    </div>
+    <div id="shulte" class="grid" style="grid-template-columns:repeat(4,1fr);max-width:400px"></div>
+    <p><span class="timer" id="shulteTime">0.0</span> сек · найдено <span id="shulteCount">0</span> из <span id="shulteTotal">0</span></p>
+    <button class="btn" id="shulteNew">Новая таблица</button>
+  </div>
+
+  <!-- Слоговые дорожки -->
+  <div class="card">
+    <h2>🛤 Слоговые дорожки</h2>
+    <p>Читай слоги слитно и быстро, без запинок.</p>
+    <div id="lanes"></div>
+    <button class="btn ghost" id="laneNew">Другая дорожка</button>
+  </div>
+
+  <!-- Замер скорости -->
+  <div class="card">
+    <h2>⏱ Замер скорости чтения</h2>
+    <p>Заготовь секундомер на телефоне. Нажми «Старт», прочитай текст вслух, нажми «Стоп». Введи, сколько минут читал (например, 0.75).</p>
+    <div class="reading" id="readText"></div>
+    <p style="font-size:14px;color:#8a6a4a">Слов в тексте: <b id="wordCount"></b></p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn" id="readStart">▶ Старт</button>
+      <button class="btn ghost" id="readStop">⏹ Стоп</button>
+      <button class="btn ghost" id="readNew">Новый текст</button>
+    </div>
+    <p><input id="minutes" type="number" step="0.05" min="0.1" placeholder="Минут" style="max-width:120px;padding:8px;border-radius:10px;border:1px solid #d8e2ec"> минуты</p>
+    <p id="wordsPerMinute" style="font-size:20px;font-weight:700;color:var(--main)"></p>
+  </div>
+
+  <div class="footer">Сделано для Марии · Спокойное чтение = быстрое чтение</div>
+</main>
+
+<script>
+/* --- оживление: тема, свечи, появление блоков --- */
+/* ==================================================================
+   ОЖИВЛЕНИЕ · тренажёры скорочтения
+   ================================================================== */
+(function(){
+  "use strict";
+  var calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var html = document.documentElement;
+
+  /* ---- 1. Ночь по умолчанию, запоминаем выбор ---- */
+  var saved = null;
+  try { saved = localStorage.getItem('tr-theme'); } catch(e){}
+  if(saved === 'light' || saved === 'dark') html.setAttribute('data-theme', saved);
+
+  /* ---- 2. Кнопка переключения темы в шапке ---- */
+  var head = document.querySelector('header');
+  if(head){
+    var t = document.createElement('button');
+    t.className = 'tgl'; t.id = 'tgl'; t.type = 'button';
+    function label(){
+      t.textContent = html.getAttribute('data-theme') === 'light' ? 'Ночная тема' : 'Светлая тема';
+    }
+    label();
+    t.addEventListener('click', function(){
+      var next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      html.setAttribute('data-theme', next);
+      try { localStorage.setItem('tr-theme', next); } catch(e){}
+      label();
+    });
+    head.appendChild(t);
+  }
+
+  /* ---- 3. Свечи ---- */
+  if(!calm){
+    var box = document.createElement('div');
+    box.className = 'candles';
+    box.setAttribute('aria-hidden','true');
+    box.innerHTML = '<span class="candle c1"></span>' +
+                    '<span class="candle c2"></span>' +
+                    '<span class="candle c3"></span>';
+    document.body.appendChild(box);
+  }
+
+  /* ---- 4. Появление карточек при прокрутке ---- */
+  var cards = document.querySelectorAll('.card');
+  if(calm || !('IntersectionObserver' in window)){
+    Array.prototype.forEach.call(cards, function(el){ el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.06, rootMargin: '0px 0px -30px 0px' });
+    Array.prototype.forEach.call(cards, function(el){ el.classList.add('rv'); io.observe(el); });
+  }
+})();
+</script>
+
+<script>
+// ---------- Шульте ----------
+let shulteSize = 4;
+let shulteNums = [];
+let shulteNext = 1;
+const shulteGrid = document.getElementById('shulte');
+const shulteTime = document.getElementById('shulteTime');
+const shulteCount = document.getElementById('shulteCount');
+const shulteTotal = document.getElementById('shulteTotal');
+let shulteStart = null;
+let shulteTimer = null;
+
+function newShulte(){
+  shulteNums = [...Array(shulteSize*shulteSize).keys()].map(i=>i+1).sort(()=>Math.random()-0.5);
+  shulteNext = 1;
+  shulteCount.textContent = '0';
+  shulteTotal.textContent = shulteSize*shulteSize;
+  shulteGrid.style.gridTemplateColumns = `repeat(${shulteSize},1fr)`;
+  shulteGrid.innerHTML = shulteNums.map(n=>
+    `<div class="cell" data-n="${n}">${n}</div>`).join('');
+  shulteGrid.onclick = e=>{
+    const c = e.target.closest('.cell'); if(!c) return;
+    const n = +c.dataset.n;
+    if(n === shulteNext){
+      c.classList.add('sel');
+      c.style.pointerEvents = 'none';
+      shulteNext++;
+      shulteCount.textContent = shulteNext-1;
+      if(shulteNext === 1){ shulteStart = performance.now();
+        clearInterval(shulteTimer);
+        shulteTimer = setInterval(()=>{ if(shulteStart) shulteTime.textContent = ((performance.now()-shulteStart)/1000).toFixed(1); },100);
+      }
+      if(shulteNext > shulteSize*shulteSize){
+        clearInterval(shulteTimer);
+        const t = ((performance.now()-shulteStart)/1000).toFixed(1);
+        shulteTime.textContent = t;
+        shulteStart = null;
+      }
+    } else {
+      c.classList.remove('err'); void c.offsetWidth; c.classList.add('err');
+      setTimeout(()=>c.classList.remove('err'),300);
+    }
+  };
+}
+document.querySelectorAll('.tab button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.tab button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');
+  shulteSize = +b.dataset.size;
+  shulteTime.textContent = '0.0';
+  newShulte();
+});
+document.getElementById('shulteNew').onclick = newShulte;
+newShulte();
+
+// ---------- Слоговые дорожки ----------
+const LANE_POOL = [
+  ['ма','мо','му','мы','ми'],['са','со','су','сы','си'],['ла','ло','лу','лы','ли'],
+  ['на','но','ну','ны','ни'],['ра','ро','ру','ры','ри'],['та','то','ту','ты','ти'],
+  ['ка','ко','ку','кы','ки'],['ша','шо','шу','ши','ше'],['жа','жо','жу','жи','же'],
+  ['ха','хо','ху','хи','хэ'],['па','по','пу','пы','пи'],['ба','бо','бу','бы','би'],
+  ['да','до','ду','ды','ди'],['га','го','гу','гы','ги'],['за','зо','зу','зы','зи'],
+  ['ва','во','ву','вы','ви'],['фа','фо','фу','фы','фи'],['ца','цо','цу','цы','це'],
+  ['ча','чо','чу','чи','че'],['ща','що','щу','щи','ще']
+];
+function shuffle(a){ return a.map(x=>[Math.random(),x]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]); }
+function laneHTML(){
+  const pick = [];
+  const chosen = shuffle([...LANE_POOL]).slice(0,4);
+  chosen.forEach(row=>{
+    let lane = [...row];
+    for(let i=0;i<3;i++) lane = [...lane, ...shuffle([...row])];
+    pick.push('<div class="lane">'+shuffle(lane).join(' · ')+'</div>');
+  });
+  return pick.join('');
+}
+document.getElementById('lanes').innerHTML = laneHTML();
+document.getElementById('laneNew').onclick = ()=>{ document.getElementById('lanes').innerHTML = laneHTML(); };
+
+// ---------- Замер скорости ----------
+const TEXTS = [
+ "Лето кончилось. Наступила осень. Листья на деревьях стали жёлтыми и красными. Часто идёт дождь. Дети идут в школу. В портфеле лежат тетради и карандаши. По утрам на траве блестит роса. Птицы улетают на юг. Осень — красивое время года.",
+ "В лесу жил ёжик. Каждое утро он выходил на поляну искать корм. Однажды ёжик нашёл сладкое яблоко. Он покатил его домой. Но яблоко было большое, а ёжик маленький. Тогда ёжик влез на яблоко и съел его прямо там. Вечером он уснул довольный.",
+ "Наступила зима. Выпал белый пушистый снег. Дети взяли санки и лыжи. Во дворе они слепили снеговика с морковкой вместо носа. Из окна выглянул кот Барсик. Ему было очень любопытно. Скоро наступит Новый год, и все будут ждать подарки.",
+ "Моя бабушка печёт очень вкусные пироги. Летом мы часто пьём чай с вишнёвым пирогом на даче. Бабушка говорит, что главный секрет — хорошее настроение. Когда месишь тесто, нужно думать о чём-то добром. Тогда пирог получится пышным и румяным. Я люблю помогать бабушке.",
+ "Весной природа просыпается. Тает снег, бегут ручьи. На проталинах появляются первые цветы — подснежники. С юга возвращаются птицы и щебечут на деревьях. Солнце светит ярче и греет ласково. Воздух пахнет свежестью. Скоро распустятся почки, и деревья оденутся в новую листву."
+];
+const readText = document.getElementById('readText');
+let readStartTime = null;
+function newRead(){
+  const t = TEXTS[Math.floor(Math.random()*TEXTS.length)];
+  readText.textContent = t;
+  document.getElementById('wordCount').textContent = t.split(/\s+/).length;
+  document.getElementById('wordsPerMinute').textContent = '';
+}
+document.getElementById('readStart').onclick = ()=>{ readStartTime = Date.now(); };
+document.getElementById('readStop').onclick = ()=>{
+  if(!readStartTime) return;
+  const secs = (Date.now()-readStartTime)/1000;
+  const min = parseFloat(document.getElementById('minutes').value) || (secs/60);
+  const words = parseInt(document.getElementById('wordCount').textContent,10);
+  const wpm = Math.round(words/min);
+  const grade = wpm>=80?(wpm>=120?'Отлично! 🏆':'Хорошо! ⭐'):'Тренируемся дальше 💪';
+  document.getElementById('wordsPerMinute').textContent = `${wpm} слов/мин · ${grade}`;
+  readStartTime = null;
+};
+document.getElementById('readNew').onclick = newRead;
+newRead();
+</script>
+</body>
+</html>

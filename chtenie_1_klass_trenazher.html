@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Русский язык · Чтение · 1 класс · Тренажёр</title>
+<style>
+/* ==================================================================
+   ВОЛШЕБНАЯ ШКОЛА · Чтение 1 класс
+   Экран — ночной замок. Печать — чёрное на белом, блок в конце файла
+   оставлен без изменений: он уже построен правильно.
+   ================================================================== */
+
+/* ---------- 1. ТОКЕНЫ ---------- */
+:root{
+  --bg:#0e1330; --card:#1a2050; --card-2:#222a63; --deep:#0b0f26;
+  --ink:#f4e9d0; --muted:#b8c0e0;
+  --main:#f0b429; --main-d:#ffd166; --main-soft:#252c66;
+  --accent:#ffd166; --sand:#f0b429;
+  --gold:#f0b429; --gold-lt:#ffd166; --wine:#a83246;
+  --ink-on-gold:#2a1f05;
+  --ok:#48c98e; --ok-bg:#16452f;
+  --bad:#e8604f; --bad-bg:#4a1d1a;
+  --line:#39427f; --focus:#ffd166;
+  --r:18px;
+  --shadow:0 10px 30px rgba(0,0,0,.45);
+  --glow:0 0 0 1px rgba(255,209,102,.22), 0 8px 30px rgba(240,180,41,.22);
+}
+html[data-theme="light"]{
+  --bg:#f6eedb; --card:#fffdf6; --card-2:#fdf4e0; --deep:#fffdf6;
+  --ink:#2b2415; --muted:#6d6150;
+  --main:#b8791a; --main-d:#8a5a10; --main-soft:#f4e8cd;
+  --accent:#7b1e2b; --sand:#b8791a;
+  --gold:#b8791a; --gold-lt:#e8b23d; --wine:#7b1e2b;
+  --ink-on-gold:#fffdf6;
+  --ok:#2f8a5f; --ok-bg:#e3f4ec;
+  --bad:#c0392b; --bad-bg:#fbeceb;
+  --line:#dfd0b0; --focus:#7b1e2b;
+  --shadow:0 8px 24px rgba(90,60,10,.16);
+  --glow:0 0 0 1px rgba(184,121,26,.3), 0 8px 26px rgba(184,121,26,.2);
+}
+
+/* ---------- 2. БАЗА ---------- */
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;color:var(--ink);
+  font:18px/1.5 "Segoe UI",-apple-system,"Helvetica Neue",Arial,sans-serif;
+  overflow-wrap:anywhere;overflow-x:hidden;min-height:100vh;
+  padding:0 14px calc(26px + env(safe-area-inset-bottom));
+  padding-left:calc(14px + env(safe-area-inset-left));
+  padding-right:calc(14px + env(safe-area-inset-right));
+  -webkit-tap-highlight-color:transparent;
+  background:
+    radial-gradient(1000px 600px at 80% -10%, rgba(255,209,102,.18), transparent 62%),
+    radial-gradient(760px 520px at 4% 106%, rgba(129,116,224,.20), transparent 60%),
+    var(--bg);
+  background-attachment:fixed;
+}
+html[data-theme="light"] body{
+  background:
+    radial-gradient(1000px 560px at 82% -12%, rgba(232,178,61,.32), transparent 60%),
+    radial-gradient(760px 520px at 2% 104%, rgba(123,30,43,.15), transparent 60%),
+    var(--bg);
+}
+h1,h2{margin:0;line-height:1.35}
+ul{margin:0;padding:0;list-style:none}
+button{font:inherit;color:inherit;-webkit-user-select:none;user-select:none;touch-action:manipulation}
+p,li,td{user-select:text;-webkit-user-select:text}
+[hidden]{display:none !important}
+
+/* звёзды и свечи */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    radial-gradient(1.7px 1.7px at 12% 16%,#fff9,transparent),
+    radial-gradient(1.5px 1.5px at 27% 62%,#fff8,transparent),
+    radial-gradient(1.8px 1.8px at 44% 9%,#fff9,transparent),
+    radial-gradient(1.3px 1.3px at 58% 41%,#fff7,transparent),
+    radial-gradient(1.6px 1.6px at 71% 24%,#fff9,transparent),
+    radial-gradient(1.2px 1.2px at 86% 57%,#fff7,transparent),
+    radial-gradient(1.3px 1.3px at 35% 88%,#fff7,transparent);
+  animation:twinkle 5.5s ease-in-out infinite alternate;
+}
+html[data-theme="light"] body::before{opacity:.3}
+@keyframes twinkle{from{opacity:.5}to{opacity:1}}
+.candles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.candle{position:absolute;width:9px;height:38px;border-radius:5px 5px 3px 3px;
+  background:linear-gradient(180deg,#fdf3dc,#c9b78c);opacity:.5;animation:floatY 10s ease-in-out infinite}
+.candle::before{content:"";position:absolute;left:50%;bottom:100%;margin-bottom:2px;
+  width:8px;height:14px;border-radius:50% 50% 46% 46%;
+  background:radial-gradient(circle at 50% 72%, #fff6d2, var(--gold-lt));
+  box-shadow:0 0 22px 8px rgba(255,209,102,.5);animation:flicker 1.7s ease-in-out infinite alternate}
+.candle::after{content:"";position:absolute;left:50%;bottom:100%;transform:translateX(-50%);
+  width:160px;height:160px;border-radius:50%;
+  background:radial-gradient(circle, rgba(255,209,102,.18), transparent 68%)}
+.c1{left:4%;top:26%;animation-duration:11s}
+.c2{right:7%;top:13%;animation-duration:13s;animation-delay:-4s}
+.c3{left:92%;top:70%;animation-duration:15s;animation-delay:-8s;transform:scale(.78)}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+@keyframes flicker{from{transform:translateX(-50%) scaleY(1);opacity:.8}to{transform:translateX(-50%) scaleY(1.2) scaleX(1.06);opacity:1}}
+
+/* ---------- 3. ШАПКА ---------- */
+header{
+  position:relative;z-index:1;
+  background:linear-gradient(135deg, var(--wine), #6d1f2e);
+  color:#fff3d6;padding:18px;text-align:center;
+  border-bottom:2px solid var(--gold);
+  border-radius:0 0 20px 20px;
+  box-shadow:0 8px 30px rgba(0,0,0,.5);
+}
+header h1{font-size:25px;text-shadow:0 2px 8px rgba(0,0,0,.5)}
+header p{margin:5px 0 0;font-size:15px;color:#f2d9a8;opacity:.95}
+.tgl{position:absolute;right:12px;top:12px;background:transparent;
+  border:1px solid rgba(255,243,214,.5);color:#fff3d6;border-radius:20px;
+  padding:6px 13px;font-size:13px;cursor:pointer;font-family:inherit;min-height:32px}
+.tgl:hover{background:rgba(255,243,214,.14)}
+html[data-theme="light"] .tgl{border-color:var(--line);color:var(--wine)}
+
+main{position:relative;z-index:1;max-width:720px;margin:18px auto}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  padding:20px;margin-bottom:16px;box-shadow:var(--shadow);
+  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
+}
+.card:hover{border-color:var(--gold);box-shadow:var(--glow),var(--shadow)}
+
+/* ---------- 4. ПРОГРЕСС ---------- */
+.progress{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.bar{flex:1;height:12px;border-radius:999px;background:var(--deep);overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;width:0;border-radius:999px;
+  background:linear-gradient(90deg,var(--gold),var(--gold-lt));
+  box-shadow:0 0 10px rgba(255,209,102,.5);transition:width .2s ease-out}
+.ptext{font-size:17px;font-weight:800;color:var(--gold-lt);white-space:nowrap}
+.dots{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.dots .dot{width:13px;height:13px;border-radius:50%;background:var(--deep);border:1px solid var(--line)}
+.dots .dot.on{background:var(--ok);border-color:var(--ok);box-shadow:0 0 8px rgba(72,201,142,.6)}
+.dots .dot.miss{background:var(--bad);border-color:var(--bad)}
+.dots .dot.now{border-color:var(--focus);border-width:3px}
+.qtext{font-size:21px;margin-bottom:6px;color:var(--gold-lt)}
+
+/* ---------- 5. ЧТЕНИЕ ПО СЛОВАМ ---------- */
+.readstep{
+  background:var(--card-2);border:2px solid var(--line);
+  border-radius:var(--r);padding:16px;margin-bottom:16px;
+}
+.readstep-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.readstep-label{font-size:17px;font-weight:800;color:var(--gold-lt)}
+.readstep-count{font-size:16px;color:var(--muted);margin-left:auto}
+.read-btn{
+  min-height:56px;padding:12px 18px;border:none;border-radius:14px;
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold));
+  color:var(--ink-on-gold);font-size:19px;font-weight:800;cursor:pointer;
+  box-shadow:0 4px 18px rgba(240,180,41,.34);
+  animation:breathe 3.8s ease-in-out infinite;
+  transition:transform .12s,filter .2s;
+}
+.read-btn:hover{filter:brightness(1.07);transform:translateY(-2px)}
+.read-btn:active{transform:scale(.98)}
+.read-btn:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+@keyframes breathe{
+  0%,100%{box-shadow:0 4px 18px rgba(240,180,41,.28)}
+  50%{box-shadow:0 6px 30px rgba(240,180,41,.55)}
+}
+.sentence{font-size:32px;line-height:1.7;margin:12px 0 0;display:flex;flex-wrap:wrap;gap:0 4px}
+.w{
+  display:inline-block;padding:2px 6px;border-radius:9px;cursor:pointer;
+  transition:background-color .18s ease-out, transform .18s ease-out, color .18s;
+}
+.w:hover{background:var(--soft-bg,var(--main-soft))}
+.w.read{color:var(--muted);opacity:.6}
+.w.now{
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold));color:var(--ink-on-gold);
+  transform:scale(1.12);font-weight:800;
+  box-shadow:0 0 22px rgba(255,209,102,.6);
+}
+.w.target{border-bottom:4px solid var(--sand);color:var(--accent);font-weight:800}
+.w.target.read{background:transparent}
+.w.target.now{background:linear-gradient(180deg,var(--gold-lt),var(--gold))}
+.read-hint{font-size:16px;color:var(--muted);margin:12px 0 0}
+
+/* ---------- 6. ВАРИАНТЫ ОТВЕТА ---------- */
+.answers{display:grid;grid-template-columns:1fr;gap:12px;margin-top:14px}
+.opt{
+  display:flex;align-items:center;gap:12px;width:100%;min-height:58px;padding:10px 14px;
+  border:2px solid var(--line);border-radius:14px;background:var(--deep);color:var(--ink);
+  font-size:20px;text-align:left;cursor:pointer;
+  transition:border-color .15s ease-out,background .15s ease-out,transform .1s ease-out;
+}
+.opt:hover:not(:disabled){border-color:var(--gold-lt);transform:translateX(3px)}
+.opt:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.opt:active:not(:disabled){transform:scale(.98)}
+.opt .key{
+  flex:0 0 34px;height:34px;border-radius:9px;
+  background:linear-gradient(135deg,var(--gold-lt),var(--gold));color:var(--ink-on-gold);
+  display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;
+}
+.opt .sylwrap{display:flex;flex-wrap:wrap;align-items:baseline}
+.opt .mark{margin-left:auto;font-size:20px;font-weight:800;flex:0 0 auto}
+.opt.is-ok{border-color:var(--ok);background:var(--ok-bg)}
+.opt.is-ok .key{background:var(--ok);color:#08281a}
+.opt.is-ok .mark{color:var(--ok)}
+.opt.is-bad{border-color:var(--bad);background:var(--bad-bg)}
+.opt.is-bad .key{background:var(--bad);color:#2a0d0a}
+.opt.is-bad .mark{color:var(--bad)}
+.opt.is-skip{border-color:var(--line);color:var(--muted)}
+.opt.is-skip .key{background:var(--line);color:var(--ink)}
+.opt:disabled{cursor:default}
+
+.syl{white-space:nowrap}
+.dash{color:var(--muted);padding:0 1px}
+.syl.st{font-weight:800;color:var(--gold-lt);border-bottom:3px solid var(--gold)}
+.opt.is-bad .syl.st{color:var(--bad);border-color:var(--bad)}
+
+.lock{
+  display:flex;align-items:center;gap:10px;font-size:17px;color:var(--muted);
+  background:var(--card-2);border:2px dashed var(--line);border-radius:12px;
+  padding:14px;margin-top:14px;
+}
+.hint{font-size:16px;color:var(--muted);margin-top:10px}
+
+/* ---------- 7. ОБРАТНАЯ СВЯЗЬ ---------- */
+.feedback{min-height:112px;margin-top:14px}
+.verdict{font-size:20px;font-weight:800;display:flex;align-items:center;gap:8px}
+.verdict.ok{color:var(--ok)}
+.verdict.bad{color:var(--bad)}
+.explain{margin-top:8px;padding:12px 14px;border-left:5px solid var(--gold);
+  border-radius:0 10px 10px 0;background:var(--card-2);
+  font-size:17px;line-height:1.5;color:var(--ink)}
+.next{
+  width:100%;min-height:56px;margin-top:6px;padding:14px;border:none;border-radius:14px;
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold));color:var(--ink-on-gold);
+  font-size:19px;font-weight:800;cursor:pointer;
+  box-shadow:0 4px 18px rgba(240,180,41,.34);
+  animation:breathe 3.8s ease-in-out infinite;
+  transition:transform .12s,filter .2s;
+}
+.next:hover{filter:brightness(1.07);transform:translateY(-2px)}
+.next:active{transform:scale(.98)}
+.next:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.next.ghost{
+  background:var(--deep);color:var(--gold-lt);border:2px solid var(--line);
+  margin-bottom:10px;box-shadow:none;animation:none;
+}
+.next.ghost:hover{border-color:var(--gold-lt);background:var(--main-soft)}
+
+/* ---------- 8. РЕЗУЛЬТАТ ---------- */
+.scorebox{text-align:center;padding:4px 0 12px}
+.bigscore{font-size:56px;font-weight:800;color:var(--gold-lt);line-height:1.1;
+  text-shadow:0 0 30px rgba(240,180,41,.4)}
+html[data-theme="light"] .bigscore{text-shadow:none;color:var(--wine)}
+.advice{font-size:18px;margin-top:6px;color:var(--ink)}
+.readstat{margin:0 0 4px;font-size:16px;color:var(--muted)}
+.mistake{margin-top:12px;padding:13px;border:1px solid var(--line);
+  border-left:5px solid var(--bad);border-radius:12px;background:var(--card-2)}
+.mistake .a{color:var(--ok);font-weight:700}
+.mistake .r{display:block;margin-top:4px;font-size:16px;color:var(--ink)}
+
+.parents{
+  position:relative;z-index:1;max-width:720px;margin:0 auto 18px;
+  background:var(--card-2);border:1px dashed var(--line);border-radius:14px;
+  padding:15px 17px;font-size:16px;line-height:1.5;color:var(--dim);
+}
+.parents b{color:var(--gold-lt)}
+html[data-theme="light"] .parents b{color:var(--wine)}
+.footer{position:relative;z-index:1;text-align:center;color:var(--muted);
+  font-size:14px;max-width:720px;margin:0 auto;padding:0 14px 8px;opacity:.75}
+
+/* ---------- 9. ЛИСТ И КЛЮЧ (на экране скрыты) ---------- */
+.sheet,.answer-key{display:none}
+.sheet-head h1{font-size:22px;margin:0 0 3mm}
+.sheet-task{font-size:13px;margin:0 0 4mm}
+.sheet-id{display:flex;gap:14mm;font-size:13px;
+  border-top:0.5pt solid #000;border-bottom:0.5pt solid #000;padding:2.5mm 0}
+.task{break-inside:avoid;page-break-inside:avoid;margin-bottom:5mm}
+.task-q{font-size:14pt;margin:0 0 1.5mm}
+.task-sent{font-size:16pt;margin:0 0 2.5mm;line-height:1.5}
+.task-sent .w{border-bottom:1.5pt solid #000;padding:0 1mm}
+.task-opts{display:grid;grid-template-columns:1fr 1fr;gap:1.5mm 6mm;margin:0}
+.task-opts li{font-size:14pt;display:flex;align-items:center;gap:3mm}
+.ring{flex:0 0 auto;width:5mm;height:5mm;border:0.4pt solid #000;border-radius:50%}
+.sheet-foot{font-size:9pt;margin-top:4mm}
+.answer-key h2{font-size:20px;margin-bottom:4px}
+.answer-key ol{padding-left:24px;margin:12px 0 0;font-size:17px;line-height:1.6}
+.answer-key li{margin-bottom:6px}
+.answer-key .a{font-weight:700}
+.criteria{width:100%;border-collapse:collapse;margin-top:18px;font-size:16px}
+.criteria th,.criteria td{border:1px solid var(--line);padding:9px 10px;text-align:left}
+.criteria th{background:var(--main-soft);color:var(--ink)}
+
+/* файл с ключом: на экране тёмная карточка, в печати белый лист */
+body.mode-answers header,body.mode-answers main,body.mode-answers .parents,
+body.mode-answers .footer{display:none}
+body.mode-answers .answer-key{
+  display:block;max-width:720px;margin:0 auto;padding:24px 18px;
+  background:var(--card);border:1px solid var(--gold);border-radius:var(--r);
+  box-shadow:var(--shadow);color:var(--ink);
+}
+body.mode-answers .answer-key h2{color:var(--gold-lt)}
+
+/* ---------- 10. АДАПТИВ ---------- */
+@media screen and (max-width:480px){
+  body{font-size:17px}
+  .opt{font-size:19px;padding:10px 12px}
+  .sentence{font-size:26px;line-height:1.75}
+  .qtext{font-size:19px}
+  header h1{font-size:21px}
+  .read-btn{font-size:18px;padding:12px 14px}
+  .feedback{min-height:128px}
+  .card{padding:16px}
+  .tgl{position:static;display:block;margin:10px auto 0}
+  .candle.c3{display:none}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{transition:none !important;animation:none !important}
+  body::before{animation:none}
+  .w.now{transform:none}
+}
+.rv{opacity:0;transform:translateY(18px);transition:opacity .55s ease, transform .55s ease}
+.rv.in{opacity:1;transform:none}
+
+/* ==================================================================
+   11. ПЕЧАТЬ A4
+   Блок оставлен из исходника без изменений: чёрное на белом,
+   ключ — отдельной страницей, цвета нет.
+   ================================================================== */
+@page{size:A4 portrait;margin:12mm 10mm 12mm 20mm}
+
+@media print{
+  :root{
+    --bg:#fff;--card:#fff;--card-2:#fff;--deep:#fff;--main-soft:#fff;--soft:#fff;
+    --ink:#000;--muted:#000;--main:#000;--main-d:#000;--accent:#000;--sand:#000;
+    --gold:#000;--gold-lt:#000;--wine:#000;--line:#000;--focus:#000;
+    --ok:#000;--ok-bg:#fff;--bad:#000;--bad-bg:#fff;--ink-on-gold:#000;
+  }
+  body{position:relative;background:#fff;color:#000;font-size:14pt;line-height:1.5;padding:0;
+    background-image:none !important}
+  body::before,.candles,.tgl{display:none !important}
+  header,main,.parents,.footer,.guide{display:none !important}
+
+  .sheet *,.answer-key *{background:transparent !important;box-shadow:none !important;
+    text-shadow:none !important}
+  .sheet,.answer-key,.sheet *,.answer-key *{color:#000 !important}
+  .sheet .hint-text{display:none}
+
+  .sheet{display:block}
+  .sheet-head h1{font-size:18pt;margin:0 0 2mm}
+  .sheet-task{font-size:11pt;margin:0 0 4mm}
+  .sheet-id{font-size:11pt;padding:2mm 0;gap:12mm}
+  .task{margin-bottom:5mm}
+  .task-q{font-size:14pt}
+  .task-sent{font-size:16pt}
+  .task-opts li{font-size:14pt}
+  .syl.st{font-weight:800;border-bottom:1.5pt solid #000;color:#000}
+  .dash{color:#000}
+  .sheet-foot{font-size:9pt;margin-top:4mm}
+
+  p,li,td{break-inside:avoid;page-break-inside:avoid}
+  h1,h2,h3{break-after:avoid;page-break-after:avoid}
+  body{orphans:3;widows:3}
+
+  .answer-key{display:block;break-before:page;page-break-before:always}
+  .answer-key ol{font-size:14pt;line-height:1.6}
+
+  /* файл с ключом: на печати только ключ, одной страницей */
+  body.mode-answers .sheet{display:none !important}
+  body.mode-answers .answer-key{break-before:auto;page-break-before:auto}
+  .criteria{font-size:12pt;margin-top:8mm}
+  .criteria th,.criteria td{border:0.4pt solid #000;padding:2.5mm 3mm}
+}
+
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📖 Чтение · 1 класс</h1>
+  <p>Слоги и ударение · читаем по словам</p>
+</header>
+
+<main id="screen">
+  <section class="card" id="quizCard">
+    <div class="progress">
+      <div class="bar" aria-hidden="true"><i id="barFill"></i></div>
+      <div class="ptext" id="progressText">1 · 5</div>
+    </div>
+    <div class="dots" id="dots" aria-hidden="true"></div>
+
+    <!-- Шаг 1: прочитать предложение по словам -->
+    <div class="readstep">
+      <div class="readstep-top">
+        <span class="readstep-label" id="readLabel">Прочитай по словам</span>
+        <span class="readstep-count" id="readCount" aria-live="polite"></span>
+        <button class="read-btn" id="readBtn" type="button">Следующее слово</button>
+      </div>
+      <p class="sentence" id="sentence"></p>
+      <p class="read-hint" id="readHint">Нажимай на кнопку или на само слово — можно идти вперёд и назад.</p>
+    </div>
+
+    <!-- Шаг 2: выбрать, как читается слово -->
+    <h2 class="qtext" id="questionText"></h2>
+    <div id="lock" class="lock">🔒 Ответы откроются, когда ты прочитаешь предложение.</div>
+    <div id="answers" class="answers" hidden></div>
+    <p class="hint hint-text">Клавиши 1–4 — выбрать ответ, Esc — вернуться к чтению.</p>
+
+    <div class="feedback" id="feedback" aria-live="polite">
+      <div class="verdict" id="verdict"></div>
+      <div class="explain" id="explain"></div>
+    </div>
+
+    <button class="next ghost" id="retry" type="button" hidden>Попробовать ещё раз</button>
+    <button class="next" id="next" type="button" hidden>Следующий вопрос</button>
+  </section>
+
+  <section class="card" id="resultCard" hidden>
+    <div class="scorebox">
+      <div class="bigscore" id="bigScore">0 из 0</div>
+      <p class="readstat" id="readStat"></p>
+      <div class="advice" id="adviceText"></div>
+    </div>
+    <h2 class="qtext">Разбор ошибок</h2>
+    <div id="mistakes"></div>
+    <button class="next" id="restart" type="button">🔄 Пройти ещё раз</button>
+  </section>
+</main>
+
+<div class="parents">
+  <b>Для родителей.</b> Ребёнок читает предложение по словам, затем выбирает, как
+  правильно читать выделенное слово. Пусть он произносит выбранный вариант вслух —
+  так тренируется слоговый слух и ударение. Один подход в день достаточно.
+</div>
+
+<p class="footer">Русский язык · 1 класс · Чтение: слоги и ударение</p>
+
+<!-- Лист для печати. Рендерится из блока данных, вручную не править. -->
+<section class="sheet" id="sheet">
+  <div class="sheet-head">
+    <h1>Чтение · 1 класс · Слоги и ударение</h1>
+    <p class="sheet-task">Прочитай предложение вслух. Обведи, как правильно читается выделенное слово.</p>
+    <div class="sheet-id">
+      <span>Имя ______________</span><span>Класс ____</span><span>Дата ____________</span>
+    </div>
+  </div>
+  <div id="sheetTasks"></div>
+  <p class="sheet-foot">Русский язык · 1 класс · Чтение: слоги и ударение</p>
+</section>
+
+<!-- Ключ ответов: отдельная печатная страница, на экране скрыт. -->
+<section class="answer-key" id="answerKey">
+  <h2>Ключ к заданиям</h2>
+  <p>Для учителя. Ключ не выдаётся ученику до проверки. Ударение выделено подчёркиванием.</p>
+  <ol id="keyList"></ol>
+  <table class="criteria">
+    <tr><th>Баллы</th><th>Отметка</th><th>Что дальше</th></tr>
+    <tr><td>5</td><td>«отлично»</td><td>Перейти к словам с тремя слогами</td></tr>
+    <tr><td>4</td><td>«хорошо»</td><td>Повторить 1 задание с ударением</td></tr>
+    <tr><td>3</td><td>«удовлетворительно»</td><td>Потренировать слоговой перенос</td></tr>
+    <tr><td>0–2</td><td>нужно повторить</td><td>Читать по слогам вслух вместе</td></tr>
+  </table>
+</section>
+
+<script>
+/* --- оживление: тема, свечи, появление блоков --- */
+/* ==================================================================
+   ОЖИВЛЕНИЕ · тренажёры скорочтения
+   ================================================================== */
+(function(){
+  "use strict";
+  var calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var html = document.documentElement;
+
+  /* ---- 1. Ночь по умолчанию, запоминаем выбор ---- */
+  var saved = null;
+  try { saved = localStorage.getItem('tr-theme'); } catch(e){}
+  if(saved === 'light' || saved === 'dark') html.setAttribute('data-theme', saved);
+
+  /* ---- 2. Кнопка переключения темы в шапке ---- */
+  var head = document.querySelector('header');
+  if(head){
+    var t = document.createElement('button');
+    t.className = 'tgl'; t.id = 'tgl'; t.type = 'button';
+    function label(){
+      t.textContent = html.getAttribute('data-theme') === 'light' ? 'Ночная тема' : 'Светлая тема';
+    }
+    label();
+    t.addEventListener('click', function(){
+      var next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      html.setAttribute('data-theme', next);
+      try { localStorage.setItem('tr-theme', next); } catch(e){}
+      label();
+    });
+    head.appendChild(t);
+  }
+
+  /* ---- 3. Свечи ---- */
+  if(!calm){
+    var box = document.createElement('div');
+    box.className = 'candles';
+    box.setAttribute('aria-hidden','true');
+    box.innerHTML = '<span class="candle c1"></span>' +
+                    '<span class="candle c2"></span>' +
+                    '<span class="candle c3"></span>';
+    document.body.appendChild(box);
+  }
+
+  /* ---- 4. Появление карточек при прокрутке ---- */
+  var cards = document.querySelectorAll('.card');
+  if(calm || !('IntersectionObserver' in window)){
+    Array.prototype.forEach.call(cards, function(el){ el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.06, rootMargin: '0px 0px -30px 0px' });
+    Array.prototype.forEach.call(cards, function(el){ el.classList.add('rv'); io.observe(el); });
+  }
+})();
+</script>
+
+<script>
+/* ============================================================
+   БЛОК ДАННЫХ · единственный источник заданий и правильных ответов
+   При смене дизайна этот блок не редактируется.
+   correct — это id варианта, а НЕ его порядковый номер.
+   stress — номер ударного слога в варианте, считая с нуля.
+   Общее число заданий — 5, это потолок для одной страницы A4.
+   ============================================================ */
+const tasks = [
+  {
+    id: 'q1',
+    sentence: 'Коля читал смешную книжку.',
+    word: 'смешную',
+    text: 'Как ты прочитаешь слово «смешную»?',
+    options: [
+      { id: 'a', text: 'с-ме-ш-ну-ю', stress: 3 },
+      { id: 'b', text: 'сме-шну-ю',    stress: 1 },
+      { id: 'c', text: 'смеш-ну-ю',   stress: 1 },
+      { id: 'd', text: 'сме-шн-у-ю',  stress: 1 }
+    ],
+    correct: 'b',
+    explain: 'СМЕШНУЮ. В слове три слога: сме — шну — ю. Ударный слог — ШНУ.'
+  },
+  {
+    id: 'q2',
+    sentence: 'Мы нашли в лесу ёжика.',
+    word: 'ёжика',
+    text: 'Как ты прочитаешь слово «ёжика»?',
+    options: [
+      { id: 'a', text: 'ё-жи-ка', stress: 0 },
+      { id: 'b', text: 'ёж-и-ка', stress: 0 },
+      { id: 'c', text: 'е-жи-ка', stress: 0 },
+      { id: 'd', text: 'ё-жик-а', stress: 0 }
+    ],
+    correct: 'a',
+    explain: 'ЁЖИКА. Три слога: ё — жи — ка. Буква Ё всегда ударная, и И не может начинать слог.'
+  },
+  {
+    id: 'q3',
+    sentence: 'Бабушка испекла пирог с яблоками.',
+    word: 'пирог',
+    text: 'Как ты прочитаешь слово «пирог»?',
+    options: [
+      { id: 'a', text: 'пи-р-ог', stress: 2 },
+      { id: 'b', text: 'пи-рог',   stress: 1 },
+      { id: 'c', text: 'пир-ог',   stress: 1 },
+      { id: 'd', text: 'пи-ро-г',  stress: 1 }
+    ],
+    correct: 'b',
+    explain: 'ПИРОГ. Два слога: пи — рог. Ударный слог — РОГ.'
+  },
+  {
+    id: 'q4',
+    sentence: 'Утром в саду пели птицы.',
+    word: 'птицы',
+    text: 'Как ты прочитаешь слово «птицы»?',
+    options: [
+      { id: 'a', text: 'пти-цы',  stress: 0 },
+      { id: 'b', text: 'п-ти-цы', stress: 0 },
+      { id: 'c', text: 'пт-и-цы', stress: 0 },
+      { id: 'd', text: 'п-ти-ца', stress: 0 }
+    ],
+    correct: 'a',
+    explain: 'ПТИЦЫ. Два слога: пти — цы. Буква Т не начинает слог, буква Ы тоже.'
+  },
+  {
+    id: 'q5',
+    sentence: 'Дети читали книгу вслух.',
+    word: 'книгу',
+    text: 'Как ты прочитаешь слово «книгу»?',
+    options: [
+      { id: 'a', text: 'к-ни-гу',  stress: 0 },
+      { id: 'b', text: 'кни-гу',   stress: 0 },
+      { id: 'c', text: 'кни-г-у',  stress: 0 },
+      { id: 'd', text: 'ки-ну',    stress: 0 }
+    ],
+    correct: 'b',
+    explain: 'КНИГУ. Два слога: кни — гу. Буква Н не начинает слог.'
+  }
+];
+
+/* ============================================================
+   РЕНДЕР · дальше идёт оформление, содержимое заданий не меняется
+   ============================================================ */
+const $ = id => document.getElementById(id);
+const quizCard  = $('quizCard'),  resultCard = $('resultCard');
+const sentence  = $('sentence'),  readBtn = $('readBtn');
+const readCount = $('readCount'), readLabel = $('readLabel'), readHint = $('readHint');
+const qText     = $('questionText'), answers = $('answers'), lock = $('lock');
+const verdict   = $('verdict'),  explain = $('explain'), nextBtn = $('next');
+const retryBtn  = $('retry');
+const barFill   = $('barFill'),  dots = $('dots'), progressText = $('progressText');
+
+let idx = 0;
+let readPos = -1;            /* номер последнего прочитанного слова */
+let wordCount = 0;
+let readCountTotal = 0;      /* сколько предложений прочитано по словам */
+let countedIdx = -1;          /* задание, уже засчитанное в счётчик */
+/* results[i] === true (верно) | false (ошибка) | null (не отвечен) */
+const results = new Array(tasks.length).fill(null);
+/* задания, где была хотя бы одна ошибка; не сбрасывается при повторе */
+const missed = new Set();
+
+const isAnswered = () => results[idx] !== null;
+const isRead = () => readPos >= wordCount - 1;
+const score = () => results.filter(v => v === true).length;
+const optOf = (t, id) => t.options.find(o => o.id === id);
+const bare = s => s.replace(/[.,!?;:—«»]/g, '');
+
+function renderProgress(){
+  barFill.style.width = (idx / tasks.length * 100) + '%';
+  progressText.textContent = (Math.min(idx + 1, tasks.length)) + ' из ' + tasks.length;
+  dots.innerHTML = tasks.map((_, i) => {
+    const cls = results[i] === true ? 'on' : results[i] === false ? 'miss' : (i === idx ? 'now' : '');
+    return '<span class="dot ' + cls + '" title="Задание ' + (i + 1) + '"></span>';
+  }).join('');
+}
+
+/* ---------- слоговая разбивка со знаком ударения ---------- */
+function fillSyllables(host, text, stress){
+  host.innerHTML = '';
+  const parts = text.split('-');
+  parts.forEach((p, i) => {
+    const s = document.createElement('span');
+    s.className = 'syl' + (i === stress ? ' st' : '');
+    s.textContent = p;
+    host.appendChild(s);
+    if (i < parts.length - 1){
+      const d = document.createElement('span');
+      d.className = 'dash';
+      d.setAttribute('aria-hidden', 'true');
+      d.textContent = '-';
+      host.appendChild(d);
+    }
+  });
+}
+
+function makeOption(t, i){
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'opt';
+  b.dataset.id = t.options[i].id;
+  b.innerHTML = '<span class="key" aria-hidden="true">' + (i + 1) + '</span>' +
+                '<span class="sylwrap"></span>' +
+                '<span class="mark" aria-hidden="true"></span>';
+  fillSyllables(b.querySelector('.sylwrap'), t.options[i].text, t.options[i].stress);
+  b.addEventListener('click', () => check(t.options[i].id));
+  return b;
+}
+
+/* ---------- чтение по словам ---------- */
+function renderSentence(t){
+  sentence.innerHTML = '';
+  const tokens = t.sentence.split(' ');
+  wordCount = tokens.length;
+  tokens.forEach((tok, i) => {
+    const s = document.createElement('span');
+    s.className = 'w' + (bare(tok) === t.word ? ' target' : '');
+    s.textContent = tok;
+    s.addEventListener('click', () => goTo(i));
+    sentence.appendChild(s);
+    if (i < tokens.length - 1) sentence.appendChild(document.createTextNode(' '));
+  });
+}
+
+function paintWords(){
+  const all = sentence.querySelectorAll('.w');
+  all.forEach((w, i) => {
+    w.classList.toggle('read', i < readPos);
+    w.classList.toggle('now', i === readPos);
+  });
+  readCount.textContent = isRead()
+    ? 'Предложение прочитано'
+    : 'Слово ' + (readPos + 1) + ' из ' + wordCount;
+}
+
+function goTo(i){
+  if (isRead() || isAnswered()) return;
+  if (i < 0 || i >= wordCount) return;
+  readPos = i;
+  paintWords();
+  if (isRead()) finishReading();
+}
+
+function readNext(){
+  if (isRead() || isAnswered()) return;
+  goTo(readPos + 1);
+}
+
+function backToReading(){
+  results[idx] = null;
+  readPos = -1;
+  renderQuestion();
+  readBtn.focus();
+}
+
+function finishReading(){
+  const t = tasks[idx];
+  if (countedIdx !== idx){ readCountTotal += 1; countedIdx = idx; }
+  readLabel.textContent = '✓ Предложение прочитано';
+  readBtn.hidden = true;
+  readHint.textContent = 'Теперь выбери, как правильно читается выделенное слово.';
+  lock.hidden = true;
+
+  answers.innerHTML = '';
+  t.options.forEach((_, i) => answers.appendChild(makeOption(t, i)));
+  answers.hidden = false;
+
+  renderProgress();
+  const first = answers.querySelector('.opt');
+  if (first) first.focus();
+}
+
+/* ---------- вопрос ---------- */
+function renderQuestion(){
+  const t = tasks[idx];
+  readPos = -1;
+  readBtn.hidden = false;
+  readLabel.textContent = 'Прочитай по словам';
+  readHint.textContent = 'Нажимай на кнопку или на само слово — можно идти вперёд и назад.';
+  lock.hidden = false;
+  answers.hidden = true;
+  answers.innerHTML = '';
+  qText.textContent = t.text;
+  verdict.textContent = '';
+  verdict.className = 'verdict';
+  explain.textContent = '';
+  nextBtn.hidden = true;
+  retryBtn.hidden = true;
+
+  renderSentence(t);
+  paintWords();
+  renderProgress();
+}
+
+function check(chosenId){
+  if (isAnswered() || !isRead()) return;
+  const t = tasks[idx];
+  const ok = chosenId === t.correct;
+  results[idx] = ok;
+  if (!ok) missed.add(idx);
+
+  Array.from(answers.querySelectorAll('.opt')).forEach(b => {
+    b.disabled = true;
+    const id = b.dataset.id;
+    if (id === t.correct) b.classList.add('is-ok');
+    else if (id === chosenId) b.classList.add('is-bad');
+    else b.classList.add('is-skip');
+    b.querySelector('.mark').textContent =
+      id === t.correct ? '✓' : (id === chosenId ? '✗' : '○');
+  });
+
+  if (ok){
+    verdict.textContent = 'Верно! Ты прочитал слово правильно ✓';
+    verdict.className = 'verdict ok';
+    retryBtn.hidden = true;
+  } else {
+    verdict.textContent = 'Пока не совсем ✗';
+    verdict.className = 'verdict bad';
+    nextBtn.hidden = true;
+    retryBtn.hidden = false;
+  }
+  explain.textContent = t.explain;
+
+  nextBtn.textContent = idx === tasks.length - 1 ? 'Показать результат' : 'Следующий вопрос';
+  nextBtn.hidden = !ok;
+  renderProgress();
+  (ok ? nextBtn : retryBtn).focus();
+}
+
+function showResult(){
+  quizCard.hidden = true;
+  resultCard.hidden = false;
+  const total = tasks.length, got = score(), pct = got / total;
+
+  $('bigScore').textContent = got + ' из ' + total;
+  $('readStat').textContent = 'Предложений прочитано по словам: ' + readCountTotal + ' из ' + total;
+
+  $('adviceText').textContent =
+    missed.size === 0 ? 'Отлично, ты читаешь по слогам уверенно! 🌟' :
+    got === total     ? 'Все слова прочитаны верно! Осталось закрепить слова с ошибками. 🌟' :
+    pct >= 0.7        ? 'Молодец! Почти всё получилось, повтори ошибки ниже. 👏' :
+    pct >= 0.5        ? 'Хорошая работа! Потренируем слоги вместе ещё раз. 💪' :
+                        'Ничего страшного! Будем читать по слогам медленно. 🌱';
+
+  const box = $('mistakes');
+  box.innerHTML = '';
+  tasks.forEach((t, i) => {
+    if (!missed.has(i)) return;
+    const d = document.createElement('div');
+    d.className = 'mistake';
+
+    const head = document.createElement('div');
+    head.textContent = 'Задание ' + (i + 1) + ' — ' + t.sentence;
+
+    const ans = document.createElement('div');
+    ans.className = 'a';
+    ans.textContent = 'Правильно: ' + optOf(t, t.correct).text.replace(/-/g, '').toUpperCase();
+
+    const why = document.createElement('span');
+    why.className = 'r';
+    why.textContent = t.explain;
+
+    d.appendChild(head);
+    d.appendChild(ans);
+    d.appendChild(why);
+    box.appendChild(d);
+  });
+  if (!box.firstChild) box.textContent = 'Ошибок нет — молодец!';
+  renderProgress();
+}
+
+function restart(){
+  idx = 0;
+  results.fill(null);
+  missed.clear();
+  readCountTotal = 0;
+  countedIdx = -1;
+  readPos = -1;
+  resultCard.hidden = true;
+  quizCard.hidden = false;
+  renderQuestion();
+  readBtn.focus();
+}
+
+/* ---------- лист для печати ---------- */
+function renderSheet(){
+  $('sheetTasks').innerHTML = tasks.map((t, i) => {
+    const sent = t.sentence.split(' ').map(w =>
+      bare(w) === t.word
+        ? '<span class="w">' + w + '</span>'
+        : w).join(' ');
+
+    const opts = t.options.map(o => {
+      const parts = o.text.split('-').map((p, k) =>
+        k === o.stress ? '<b>' + p + '</b>' : p).join('-');
+      return '<li><span class="ring"></span><span>' + parts + '</span></li>';
+    }).join('');
+
+    return '<article class="task">' +
+             '<p class="task-q">' + (i + 1) + '. ' + t.text + '</p>' +
+             '<p class="task-sent">' + sent + '</p>' +
+             '<ul class="task-opts">' + opts + '</ul>' +
+           '</article>';
+  }).join('');
+}
+
+/* ---------- ключ ответов ---------- */
+function renderKey(){
+  $('keyList').innerHTML = tasks.map((t, i) => {
+    const o = optOf(t, t.correct);
+    const pretty = o.text.split('-').map((p, k) => k === o.stress ? '<u>' + p + '</u>' : p).join('-');
+    return '<li>' + (i + 1) + ') ' + pretty + ' <span>— ' + t.explain + '</span></li>';
+  }).join('');
+}
+
+/* ---------- клавиатура ---------- */
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey || e.altKey || e.metaKey) return;
+  const t = e.target;
+  if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+  if (resultCard.hidden === false) return;
+
+  if (e.key === 'Escape'){
+    e.preventDefault();
+    if (isRead() || isAnswered()) backToReading();
+    return;
+  }
+
+  /* если событие пришло с самой кнопки, её обрабатывает браузер — не дублируем */
+  if (t === readBtn) return;
+
+  const buttons = Array.from(answers.querySelectorAll('.opt'));
+  const readingStep = !isRead();
+
+  if (readingStep){
+    if (e.key === ' ' || e.key === 'Spacebar' || e.key === 'Enter'){
+      e.preventDefault();
+      readNext();
+    } else if (e.key === 'ArrowLeft'){
+      e.preventDefault();
+      if (readPos > 0) goTo(readPos - 1);
+    }
+    return;
+  }
+
+  if (isAnswered()){
+    if (e.key === 'Enter'){
+      if (!nextBtn.hidden){ e.preventDefault(); nextBtn.click(); }
+      else if (!retryBtn.hidden){ e.preventDefault(); retryBtn.click(); }
+    }
+    return;
+  }
+
+  if (/^[1-9]$/.test(e.key)){
+    const b = buttons[Number(e.key) - 1];
+    if (b){ e.preventDefault(); b.click(); }
+    return;
+  }
+
+  const inList = buttons.indexOf(document.activeElement) >= 0;
+  if (e.key === 'ArrowDown' || (e.key === 'ArrowRight' && !inList)){
+    e.preventDefault();
+    if (buttons[0]) buttons[0].focus();
+    return;
+  }
+
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowRight'){
+    e.preventDefault();
+    const i = buttons.indexOf(document.activeElement);
+    const n = e.key === 'ArrowRight' ? i + 1 : i - 1;
+    if (buttons[n]) buttons[n].focus();
+  }
+});
+
+answers.addEventListener('keydown', e => {
+  if (e.key !== ' ' && e.key !== 'Spacebar') return;
+  const b = e.target.closest('.opt');
+  if (b && !b.disabled){ e.preventDefault(); b.click(); }
+});
+
+readBtn.addEventListener('click', readNext);
+retryBtn.addEventListener('click', () => backToReading());
+nextBtn.addEventListener('click', () => {
+  idx += 1;
+  if (idx >= tasks.length) showResult(); else renderQuestion();
+});
+$('restart').addEventListener('click', restart);
+
+/* ---------- разметка печатной области, если включён класс guides ---------- */
+if (document.body.classList.contains('guides')){
+  const g = document.querySelector('.guide');
+  let h = '';
+  for (let i = 1; i <= 27; i++) h += '<i style="top:' + (i * 10) + 'mm"></i>';
+  g.innerHTML = h;
+}
+
+renderSheet();
+renderKey();
+renderQuestion();
+readBtn.focus();
+</script>
+</body>
+</html>

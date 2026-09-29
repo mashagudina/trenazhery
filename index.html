@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тренажёры и материалы · Память · Концентрация · Интеллект</title>
+<style>
+:root{
+  --bg:#0e1330;--card:#1a2050;--card-2:#222a63;--deep:#0b0f26;--soft:#252c66;
+  --ink:#f4e9d0;--dim:#b8c0e0;--line:#39427f;--gold:#f0b429;--gold-lt:#ffd166;
+  --wine:#a83246;--ok:#48c98e;--bad:#e8604f;--accent:var(--gold);--ink-on-gold:#2a1f05;
+  --shadow:0 10px 30px rgba(0,0,0,.45);
+  --glow:0 0 0 1px rgba(255,209,102,.22), 0 8px 30px rgba(240,180,41,.22);
+}
+html[data-theme="light"]{
+  --bg:#f6eedb;--card:#fffdf6;--card-2:#fdf4e0;--deep:#fffdf6;--soft:#f4e8cd;
+  --ink:#2b2415;--dim:#6d6150;--line:#dfd0b0;--gold:#b8791a;--gold-lt:#e8b23d;
+  --wine:#7b1e2b;--ok:#2f8a5f;--bad:#c0392b;--ink-on-gold:#fffdf6;
+  --shadow:0 8px 24px rgba(90,60,10,.16);
+  --glow:0 0 0 1px rgba(184,121,26,.3), 0 8px 26px rgba(184,121,26,.2);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:"Segoe UI",Arial,sans-serif;color:var(--ink);
+  background:
+    radial-gradient(1100px 620px at 80% -10%, rgba(255,209,102,.16), transparent 62%),
+    radial-gradient(760px 520px at 4% 104%, rgba(168,50,70,.16), transparent 60%),
+    var(--bg);
+  background-attachment:fixed;min-height:100vh;
+  padding-bottom:calc(28px + env(safe-area-inset-bottom));
+  -webkit-text-size-adjust:100%;
+}
+html[data-theme="light"] body{
+  background:
+    radial-gradient(1000px 560px at 82% -12%, rgba(232,178,61,.32), transparent 60%),
+    radial-gradient(760px 520px at 2% 104%, rgba(123,30,43,.15), transparent 60%),
+    var(--bg);
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.9;
+  background-image:
+    radial-gradient(1.5px 1.5px at 14% 18%, #fff9, transparent),
+    radial-gradient(1.5px 1.5px at 58% 10%, #fff9, transparent),
+    radial-gradient(1.2px 1.2px at 80% 44%, #fff7, transparent),
+    radial-gradient(1.4px 1.4px at 30% 66%, #fff7, transparent),
+    radial-gradient(1.2px 1.2px at 48% 88%, #fff6, transparent),
+    radial-gradient(1.3px 1.3px at 92% 72%, #fff8, transparent);
+  animation:twinkle 5.5s ease-in-out infinite alternate;
+}
+html[data-theme="light"] body::before{opacity:.3}
+@keyframes twinkle{from{opacity:.5}to{opacity:1}}
+.candles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.candle{position:absolute;width:9px;height:38px;border-radius:5px 5px 3px 3px;
+  background:linear-gradient(180deg,#fdf3dc,#c9b78c);opacity:.55;
+  animation:floatY 10s ease-in-out infinite}
+.candle::after{content:"";position:absolute;left:50%;top:-9px;width:7px;height:11px;
+  border-radius:50% 50% 46% 46%;background:radial-gradient(circle,#fff6c9,#f0b429);
+  transform:translateX(-50%);animation:flicker 1.1s ease-in-out infinite alternate}
+.candle.c1{left:6%;top:16%;animation-delay:-2s}
+.candle.c2{left:88%;top:24%;animation-delay:-6s;transform:scale(.9)}
+.candle.c3{left:72%;top:78%;animation-delay:-8s;transform:scale(.78)}
+html[data-theme="light"] .candle{opacity:.38}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+@keyframes flicker{from{transform:translateX(-50%) scaleY(1);opacity:.8}
+  to{transform:translateX(-50%) scaleY(1.25);opacity:1}}
+header{position:relative;z-index:1;
+  background:linear-gradient(135deg, var(--wine), #6d1f2e);
+  padding:20px 18px 18px;border-bottom:2px solid var(--gold);
+  box-shadow:0 6px 24px rgba(0,0,0,.45)}
+header .in{max-width:900px;margin:0 auto}
+header h1{margin:0;font-size:28px;color:#fff3d6;text-shadow:0 2px 8px rgba(0,0,0,.5)}
+header p{margin:6px 0 0;font-size:15px;color:#f2d9a8;opacity:.95;max-width:60ch}
+.tgl{position:absolute;right:14px;top:14px;background:transparent;
+  border:1px solid rgba(255,243,214,.5);color:#fff3d6;border-radius:20px;padding:6px 13px;
+  font-size:13px;cursor:pointer;font-family:inherit;min-height:32px}
+.tgl:hover{background:rgba(255,243,214,.14)}
+html[data-theme="light"] .tgl{border-color:var(--line);color:var(--wine)}
+main{position:relative;z-index:1;max-width:900px;margin:20px auto;padding:0 14px}
+h2{font-size:23px;color:var(--gold-lt);margin:30px 0 4px;display:flex;align-items:center;gap:10px}
+h2 .ico{font-size:25px}
+h2 .cnt{font-size:12px;font-weight:400;color:var(--dim);
+  border:1px solid var(--line);border-radius:20px;padding:2px 10px}
+.lead{margin:0 0 14px;font-size:15px;color:var(--dim);max-width:70ch}
+.grid{display:grid;gap:11px;grid-template-columns:repeat(auto-fill,minmax(258px,1fr))}
+.tile{display:flex;align-items:flex-start;gap:12px;text-decoration:none;color:inherit;
+  background:var(--card);border:1px solid var(--line);border-radius:16px;
+  padding:15px 16px;min-height:74px;box-shadow:var(--shadow);
+  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.tile:hover{transform:translateY(-4px);border-color:var(--gold);
+  box-shadow:0 0 0 1px rgba(255,209,102,.25),0 12px 28px rgba(240,180,41,.2)}
+.tile:active{transform:translateY(0)}
+.tile .em{flex:none;width:42px;height:42px;border-radius:12px;display:grid;place-items:center;
+  font-size:22px;background:var(--soft);border:1px solid var(--line)}
+.tile .tt{min-width:0}
+.tile .tt b{display:block;font-size:16px;line-height:1.3}
+.tile .tt span{display:block;font-size:13px;color:var(--dim);margin-top:3px;line-height:1.4}
+.big{display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit;
+  background:linear-gradient(135deg,var(--card-2),var(--card));
+  border:1px solid var(--gold);border-radius:18px;padding:18px 20px;
+  box-shadow:var(--glow);transition:transform .2s ease}
+.big:hover{transform:translateY(-3px)}
+.big .em{flex:none;width:48px;height:48px;border-radius:14px;display:grid;place-items:center;
+  font-size:26px;background:var(--soft);border:1px solid var(--line)}
+.big .tt b{display:block;font-size:18px}
+.big .tt span{display:block;font-size:13.5px;color:var(--dim);margin-top:3px}
+.note{background:var(--card);border:1px dashed var(--line);border-radius:16px;
+  padding:16px 18px;font-size:15px;color:var(--dim);margin-top:16px;line-height:1.6}
+.note b{color:var(--gold-lt)}
+.levels{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  margin:0 0 4px;padding:0;list-style:none}
+.levels li{background:var(--soft);border:1px solid var(--line);border-radius:12px;
+  padding:10px 13px;font-size:14.5px}
+.levels li b{color:var(--gold-lt);display:block;font-size:15px;margin-bottom:2px}
+footer{position:relative;z-index:1;max-width:900px;margin:34px auto 0;padding:16px 14px 0;
+  border-top:1px solid var(--line);font-size:13.5px;color:var(--dim);line-height:1.6}
+:focus-visible{outline:3px solid var(--gold-lt);outline-offset:2px;border-radius:12px}
+@media (max-width:520px){
+  header h1{font-size:22px}
+  header p{font-size:14px}
+  h2{font-size:20px}
+  .grid{grid-template-columns:1fr}
+  .levels{grid-template-columns:1fr}
+  .tile{min-height:64px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important}
+}
+@media print{
+  .tgl,.candles{display:none !important}
+  body{background:#fff !important}
+  .tile,.big{box-shadow:none;border:1px solid #999}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="in">
+    <h1>✨ Тренажёры и методические материалы</h1>
+    <p>Онлайн-тренажёры и печатные рабочие листы с ключами для тренера.
+       Четыре возрастные группы, работает без интернета.</p>
+  </div>
+  <button class="tgl" id="themeBtn" type="button" aria-label="Переключить тему">Светлая тема</button>
+</header>
+<div class="candles" aria-hidden="true">
+  <div class="candle c1"></div><div class="candle c2"></div><div class="candle c3"></div>
+</div>
+<main>
+<h2><span class="ico">🧠</span> Новое направление <span class="cnt">3 тренажёра</span></h2>
+<p class="lead">Занятия по памяти, концентрации и интеллекту. В каждом тренажёре четыре уровня — сложность растёт с возрастом.</p>
+  <ul class="levels">
+    <li><b>7–10 лет</b>свой набор заданий и времени</li>
+    <li><b>11–13 лет</b>свой набор заданий и времени</li>
+    <li><b>14–17 лет</b>свой набор заданий и времени</li>
+    <li><b>18+</b>свой набор заданий и времени</li>
+  </ul>
+  <div class="grid" style="margin-top:12px">
+    <a class="tile" href="trenazher_pamyat.html">
+      <span class="em">🔮</span>
+      <span class="tt"><b>Память</b><span>Цепочки слов, фотоглаз, дворец памяти, поиск пар</span></span>
+    </a>
+    <a class="tile" href="trenazher_koncentraciya.html">
+      <span class="em">🎯</span>
+      <span class="tt"><b>Концентрация</b><span>Поиск чисел в таблице, буквы, N-back, таймер-блоки</span></span>
+    </a>
+    <a class="tile" href="trenazher_intellekt.html">
+      <span class="em">🧠</span>
+      <span class="tt"><b>Интеллект</b><span>Лишнее, числовые ряды, аналогии, ловушки-обманки</span></span>
+    </a>
+  </div>
+<h2><span class="ico">📘</span> Методические материалы <span class="cnt">29 файлов PDF</span></h2>
+<p class="lead">Годовая программа на 72 урока, поурочные планы, рабочие листы с домашкой и отдельные ключи для тренера.</p>
+    <a class="big" href="materialy.html">
+      <span class="em">📚</span>
+      <span class="tt"><b>Открыть все материалы для печати</b><span>Программа · 4 плана · 12 рабочих листов · 12 ключей — A4</span></span>
+    </a>
+<h2><span class="ico">👓</span> Таблица Шульте <span class="cnt">4 уровня</span></h2>
+<p class="lead">Разминка для зрения и внимания перед основной работой.</p>
+  <div class="grid">
+    <a class="tile" href="trenazher_7-10.html">
+      <span class="em">⭐</span>
+      <span class="tt"><b>Шульте · 7–10 лет</b><span>Разогревка для зрения и внимания</span></span>
+    </a>
+    <a class="tile" href="trenazher_11-13.html">
+      <span class="em">⭐</span>
+      <span class="tt"><b>Шульте · 11–13 лет</b><span>Поле зрения и скорость взгляда</span></span>
+    </a>
+    <a class="tile" href="trenazher_14-17.html">
+      <span class="em">⭐</span>
+      <span class="tt"><b>Шульте · 14–17 лет</b><span>Расширяем периферию взгляда</span></span>
+    </a>
+    <a class="tile" href="trenazher_18.html">
+      <span class="em">⭐</span>
+      <span class="tt"><b>Шульте · 18+</b><span>Тренировка для взрослых</span></span>
+    </a>
+  </div>
+<h2><span class="ico">📚</span> Школьные тренажёры <span class="cnt">2 тренажёра</span></h2>
+  <div class="grid">
+    <a class="tile" href="chtenie_1_klass_trenazher.html">
+      <span class="em">📖</span>
+      <span class="tt"><b>Чтение · 1 класс</b><span>Слоги, слова и первые тексты с проверкой</span></span>
+    </a>
+    <a class="tile" href="russkij_4_klass_orfografija_trenazher.html">
+      <span class="em">✍</span>
+      <span class="tt"><b>Русский язык · 4 класс</b><span>Орфография с проверкой ответов</span></span>
+    </a>
+  </div>
+<div class="note">
+  <b>Как пользоваться:</b> всё работает без интернета — откройте файл двойным
+  щелчком. В тренажёрах есть светлая и тёмная темы, четыре возрастных уровня
+  и счёт очков. Печатные материалы открываются из раздела выше.
+  <br><br>
+  <b>Дневник чтения</b> остался на сайте-визитке — <code>chitatelskij_dnevnik.html</code>.
+</div>
+</main>
+<footer>
+  Тренажёры и материалы · работает офлайн · печать A4<br>
+  Основной сайт с контактами и записью на занятия — в соседней папке сайта.
+</footer>
+<script>
+document.getElementById('themeBtn').addEventListener('click',()=>{
+  const el=document.documentElement; const light=el.dataset.theme==='light';
+  el.dataset.theme=light?'dark':'light';
+  document.getElementById('themeBtn').textContent=light?'Светлая тема':'Тёмная тема';
+});
+</script>
+</body>
+</html>
