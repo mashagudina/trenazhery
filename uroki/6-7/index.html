@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Скорочтение 6-7 · все уроки</title>
+<style>
+:root{--bg:#2a1f3d; --card:#38284f; --ink:#f7e8c8; --main:#f2c14e; --main-2:#e8834a; --glow:#ffc94d; --deep:#1a1228; --line:#5c4478; --soft:#43305d; --ok:#4fbf8b; --ok-bg:#1f4a3c; --bad:#e07a5f; --bad-bg:#4d2320; --focus:#ffc94d; --base:17px; --h1:27px; --h2:21px; --btn:56px; --btnf:19px; --rad:18px;}
+*{box-sizing:border-box; margin:0; padding:0}
+html,body{height:100%}
+body{
+  font-family:"Segoe UI","Trebuchet MS",Verdana,sans-serif;
+  font-size:var(--base); color:var(--ink); overflow:hidden;
+  background:
+    radial-gradient(1100px 620px at 78% -8%, rgba(255,200,77,.16), transparent 62%),
+    radial-gradient(760px 520px at 6% 104%, rgba(60,110,214,.13), transparent 60%),
+    var(--bg);
+  background-attachment:fixed;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 18% 22%, #fff8, transparent),
+    radial-gradient(1.5px 1.5px at 64% 12%, #fff8, transparent),
+    radial-gradient(1.2px 1.2px at 82% 48%, #fff6, transparent),
+    radial-gradient(1.4px 1.4px at 32% 68%, #fff6, transparent),
+    radial-gradient(1.2px 1.2px at 52% 86%, #fff5, transparent);
+}
+.stage{position:fixed; inset:0; z-index:1}
+.slide{
+  position:absolute; inset:0; overflow-y:auto; -webkit-overflow-scrolling:touch;
+  display:flex; align-items:center; justify-content:center; padding:28px 24px 88px;
+  opacity:0; transform:translateX(46px);
+  transition:opacity .25s ease, transform .25s ease; pointer-events:none;
+}
+.slide.active{opacity:1; transform:none; pointer-events:auto}
+.inner{width:100%; max-width:940px; margin:auto; display:flex; flex-direction:column; gap:18px}
+.kicker{font-size:17px; letter-spacing:1.3px; text-transform:uppercase; color:var(--glow); display:flex; gap:12px; align-items:center}
+h1{font-size:var(--h1); line-height:1.16; color:#fff6e6; text-shadow:0 2px 18px rgba(255,209,102,.20)}
+h2{font-size:var(--h2); line-height:1.22; color:#fff6e6}
+p.lead{font-size:19px; line-height:1.45; max-width:840px}
+p.hint{font-size:16px; color:var(--ink); opacity:.85; line-height:1.4; max-width:840px}
+p.hint small{opacity:.85}
+.card{background:var(--card); border:1px solid var(--line); border-radius:var(--rad);
+  box-shadow:0 8px 26px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.05); padding:18px 22px}
+.card.gilded{border:1px solid var(--main);
+  box-shadow:0 0 0 1px rgba(255,209,102,.15), 0 10px 30px rgba(0,0,0,.5)}
+.wings{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+.wing{background:var(--card); border:1px solid var(--line); border-radius:var(--rad);
+  padding:16px 20px; display:flex; gap:14px; align-items:center; box-shadow:0 6px 20px rgba(0,0,0,.35)}
+.wing .ico{font-size:38px; line-height:1; flex:none}
+.wing .tt{display:flex; flex-direction:column}
+.wing .t{font-weight:800; color:#fff6e6; font-size:20px}
+.wing .s{color:var(--glow); font-size:15px}
+.steps{display:flex; flex-direction:column; gap:12px}
+.step{display:flex; gap:14px; align-items:flex-start}
+.step .n{flex:none; width:40px; height:40px; border-radius:50%;
+  background:linear-gradient(160deg,var(--glow),var(--main)); color:#141a04; font-weight:800;
+  font-size:19px; display:flex; align-items:center; justify-content:center}
+.step .tx{font-size:18px; line-height:1.5}
+.timer{display:flex; flex-direction:column; align-items:center; gap:16px}
+.ring{width:200px; height:200px; border-radius:50%; border:6px solid var(--line);
+  display:flex; align-items:center; justify-content:center; position:relative;
+  background:radial-gradient(circle at 50% 42%, rgba(255,209,102,.10), transparent 70%)}
+.ring.go{border-color:var(--glow); box-shadow:0 0 26px rgba(255,209,102,.35)}
+.ring.done{border-color:var(--bad); box-shadow:0 0 26px rgba(232,96,79,.4)}
+.tnum{font-size:96px; font-weight:800; color:#fff6e6; line-height:1}
+.timer-ctrl{display:flex; gap:12px; flex-wrap:wrap; justify-content:center}
+.btn-primary{background:linear-gradient(180deg, var(--glow), var(--main)); color:#141a04; font-weight:800;
+  font-size:var(--btnf); border:none; border-radius:16px; min-height:var(--btn); padding:10px 26px; cursor:pointer;
+  box-shadow:0 4px 16px rgba(255,209,102,.30)}
+.btn-primary:hover{filter:brightness(1.08)}
+.btn{background:var(--soft); color:var(--ink); font-weight:700; font-size:var(--btnf);
+  border:1px solid var(--line); border-radius:16px; min-height:var(--btn); padding:10px 26px; cursor:pointer}
+.btn:hover{filter:brightness(1.1)}
+.chain{display:flex; flex-direction:column; align-items:center; gap:16px}
+.cword{font-size:50px; font-weight:800; color:var(--glow); min-height:72px;
+  display:flex; align-items:center; justify-content:center; text-align:center;
+  text-shadow:0 2px 18px rgba(255,209,102,.3)}
+.cdots{display:flex; gap:8px; flex-wrap:wrap; justify-content:center}
+.cdot{width:13px; height:13px; border-radius:50%; border:1px solid var(--line)}
+.cdot.on{background:var(--glow); border-color:var(--glow)}
+.cmsg{font-size:18px; min-height:28px}
+.schulte{display:grid; gap:8px; max-width:370px; margin:0 auto}
+.sn{aspect-ratio:1; border:1px solid var(--line); border-radius:10px; color:var(--glow);
+  font-size:21px; font-weight:700; display:flex; align-items:center; justify-content:center; background:var(--soft)}
+.chips{display:flex; flex-wrap:wrap; gap:12px; justify-content:center}
+.chip{background:var(--card); border:1px solid var(--line); border-radius:16px;
+  padding:12px 22px; font-size:20px; color:#fff6e6; box-shadow:0 5px 16px rgba(0,0,0,.3)}
+.center{text-align:center}
+.btns{display:flex; gap:14px; flex-wrap:wrap; justify-content:center}
+.nav{position:fixed; left:0; right:0; bottom:0; z-index:5;
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+  padding:12px 18px calc(12px + env(safe-area-inset-bottom));
+  background:linear-gradient(180deg, transparent, rgba(8,10,16,.92))}
+.dots{display:flex; gap:8px; flex-wrap:wrap}
+.dot{width:12px; height:12px; border-radius:50%; border:1px solid var(--line); background:transparent; cursor:pointer; padding:0}
+.dot.on{background:var(--glow); border-color:var(--glow); box-shadow:0 0 10px rgba(255,209,102,.55)}
+.counter{color:var(--ink); opacity:.85; font-size:17px}
+.keys{color:var(--ink); opacity:.75; font-size:15px; text-align:right}
+@media (prefers-reduced-motion: reduce){*{animation:none !important; transition:none !important}}
+@media (max-width:560px){
+  :root{--h1:25px; --h2:20px}
+  body{font-size:16px}
+  .wings{grid-template-columns:1fr}
+  .keys{display:none}
+  .slide{padding-bottom:100px}
+  .cword{font-size:40px}
+  .sn{font-size:18px}
+}
+@media print{
+  :root{
+    --bg:#fff; --card:#fff; --soft:#fff; --deep:#fff;
+    --ink:#1a1a1a; --line:#000;
+    --main:#000; --main-2:#555; --glow:#666; --focus:#000;
+  }
+  html,body{height:auto; overflow:visible; background:#fff !important}
+  body::before{display:none}
+  .stage{position:static}
+  .slide{position:static; display:block; opacity:1 !important; transform:none;
+    padding:14mm; height:auto; min-height:264mm; break-after:page; page-break-after:always;
+    overflow:visible; align-items:flex-start; pointer-events:auto}
+  .slide:last-child{break-after:auto}
+  .nav{display:none}
+  .card,.wing,.chip{box-shadow:none; background:#fff !important; border:.5pt solid #000; border-radius:0}
+  *{background-image:none !important; text-shadow:none !important; box-shadow:none !important}
+  h1,h2,.wing .t,.sn,.cword,.step .n{color:#000 !important; text-shadow:none}
+  .step .n,.sn{border:.5pt solid #000; background:none !important}
+  .btn-primary,.btn{background:none !important; color:#000 !important; border:.5pt solid #000}
+  .ring{border:.5pt solid #000}
+}
+
+body{padding:20px; overflow:auto}
+h1{margin-bottom:6px} .back{display:inline-block; margin-bottom:18px; color:var(--glow)}
+.lines{display:flex; flex-direction:column; gap:8px}
+.line{display:flex; gap:14px; align-items:flex-start; background:var(--card); border:1px solid var(--line); border-radius:var(--rad); padding:14px 18px; color:var(--ink); text-decoration:none; transition:transform .15s ease, border-color .15s ease}
+.line:hover{border-color:var(--main); transform:translateX(4px); text-decoration:none}
+.line .num{font-weight:800; color:var(--glow); font-size:18px; min-width:34px}
+.line .t{font-weight:800; color:#fff6e6; font-size:18px}
+.line .d{color:var(--ink); opacity:.8; font-size:15px}
+</style>
+</head>
+<body>
+<a class="back" href="../index.html">← ко всем возрастам</a>
+<h1>Скорочтение · 6-7 · Сказка</h1>
+<p class="hint">72 уроков · открывается в браузере · листай → · печать: каждый слайд отдельной страницей</p>
+<div class="lines"><a class="line" href="urok_01.html"><span class="num">01</span><span class="tt"><span class="t">Знакомство и первый замер</span><span class="d">Сентябрь · Пробуем прочитать короткий текст по слогам, отвечаем на вопросы. Первый «замер»: сколько слов читаем за минуту.</span></span></a><a class="line" href="urok_02.html"><span class="num">02</span><span class="tt"><span class="t">Звук и буква</span><span class="d">Сентябрь · Слушаем звук, находим букву, показываем её. Учимся не путать звук и букву.</span></span></a><a class="line" href="urok_03.html"><span class="num">03</span><span class="tt"><span class="t">Слоги-пары</span><span class="d">Сентябрь · Складываем слоги в слова: МА + МА. Читаем короткие слова целиком.</span></span></a><a class="line" href="urok_04.html"><span class="num">04</span><span class="tt"><span class="t">Ритм скороговорки</span><span class="d">Сентябрь · Говорим скороговорку по слогам с хлопками, ускоряемся. Тренируем артикуляцию.</span></span></a><a class="line" href="urok_05.html"><span class="num">05</span><span class="tt"><span class="t">Взгляд по строке</span><span class="d">Сентябрь · Водим пальчиком, потом только глазами по строке простых слов. Не теряем строку.</span></span></a><a class="line" href="urok_06.html"><span class="num">06</span><span class="tt"><span class="t">Шульте 4×4</span><span class="d">Сентябрь · Находим числа от 1 до 16 в таблице. Две попытки, записываем лучшую.</span></span></a><a class="line" href="urok_07.html"><span class="num">07</span><span class="tt"><span class="t">Пары и отличия</span><span class="d">Сентябрь · Находим одинаковые пары и одно отличие. Тренируем внимание.</span></span></a><a class="line" href="urok_08.html"><span class="num">08</span><span class="tt"><span class="t">Итоги месяца</span><span class="d">Сентябрь · Повторяем техники месяца, «замер» скорости чтения. Весёлое подведение итогов.</span></span></a><a class="line" href="urok_09.html"><span class="num">09</span><span class="tt"><span class="t">Чтение по слогам</span><span class="d">Октябрь · Читаем короткие слова по слогам с указкой, плавно, не глотая концовки.</span></span></a><a class="line" href="urok_10.html"><span class="num">10</span><span class="tt"><span class="t">Слоговые дорожки</span><span class="d">Октябрь · Скользим взглядом по дорожкам слогов слева направо. Ускоряем темп.</span></span></a><a class="line" href="urok_11.html"><span class="num">11</span><span class="tt"><span class="t">Слово в окошке</span><span class="d">Октябрь · Показываем слово на секунду, называем его. Схватываем слово целиком.</span></span></a><a class="line" href="urok_12.html"><span class="num">12</span><span class="tt"><span class="t">Цепочка слов</span><span class="d">Октябрь · Запоминаем цепочку из пяти слов по порядку и повторяем её вслух.</span></span></a><a class="line" href="urok_13.html"><span class="num">13</span><span class="tt"><span class="t">Пересказ-лесенка</span><span class="d">Октябрь · После чтения выстраиваем картинки сюжета по порядку и пересказываем.</span></span></a><a class="line" href="urok_14.html"><span class="num">14</span><span class="tt"><span class="t">Тексты с вопросами</span><span class="d">Октябрь · Читаем короткий текст и отвечаем на вопросы: кто? что? где?</span></span></a><a class="line" href="urok_15.html"><span class="num">15</span><span class="tt"><span class="t">Секретные знаки</span><span class="d">Октябрь · Подчёркиваем в тексте одинаковые буквы. Учимся сканировать.</span></span></a><a class="line" href="urok_16.html"><span class="num">16</span><span class="tt"><span class="t">Итоги месяца</span><span class="d">Октябрь · Игры месяца, «замер» на память и внимание. отмечаем рост в дневнике.</span></span></a><a class="line" href="urok_17.html"><span class="num">17</span><span class="tt"><span class="t">Слово-лишнее</span><span class="d">Ноябрь · Находим, какое слово выпадает из ряда, и объясняем почему. Логика с опорой на чтение.</span></span></a><a class="line" href="urok_18.html"><span class="num">18</span><span class="tt"><span class="t">Колонки слов</span><span class="d">Ноябрь · Читаем слова столбиком сверху вниз. Учимся вертикальному движению взгляда.</span></span></a><a class="line" href="urok_19.html"><span class="num">19</span><span class="tt"><span class="t">Чтение с хороводом</span><span class="d">Ноябрь · Читаем по кругу: каждый читает по слову. Учимся держать темп группы.</span></span></a><a class="line" href="urok_20.html"><span class="num">20</span><span class="tt"><span class="t">Быстрый взгляд</span><span class="d">Ноябрь · Учимся видеть слово целиком, а не по буквам. Играем в «фотоаппарат».</span></span></a><a class="line" href="urok_21.html"><span class="num">21</span><span class="tt"><span class="t">Пирамида слов</span><span class="d">Ноябрь · Читаем пирамиду от коротких слов к длинным, снижая паузы. Расширяем поле зрения.</span></span></a><a class="line" href="urok_22.html"><span class="num">22</span><span class="tt"><span class="t">Загадки-рифмы</span><span class="d">Ноябрь · Догадываемся по рифме, какое слово подходит. Слушаем звучание языка.</span></span></a><a class="line" href="urok_23.html"><span class="num">23</span><span class="tt"><span class="t">Смысловые паузы</span><span class="d">Ноябрь · Читаем с паузами в правильных местах. Пунктуация для понимания.</span></span></a><a class="line" href="urok_24.html"><span class="num">24</span><span class="tt"><span class="t">Итоги месяца</span><span class="d">Ноябрь · Игры месяца, «замер» скорости. Сравниваем с началом.</span></span></a><a class="line" href="urok_25.html"><span class="num">25</span><span class="tt"><span class="t">Зимние тексты</span><span class="d">Декабрь · Читаем короткий зимний рассказ и находим в нём согласные «замёрзшие» буквы. Тепло и темой.</span></span></a><a class="line" href="urok_26.html"><span class="num">26</span><span class="tt"><span class="t">Двойные колонки</span><span class="d">Декабрь · Читаем две колонки слов подряд. Тренируем расширение поля зрения.</span></span></a><a class="line" href="urok_27.html"><span class="num">27</span><span class="tt"><span class="t">Словарь скорохода</span><span class="d">Декабрь · Повторяем слова предыдущих уроков быстро по карточкам. Накопление словаря.</span></span></a><a class="line" href="urok_28.html"><span class="num">28</span><span class="tt"><span class="t">Пересказ с опорой</span><span class="d">Декабрь · Читаем и пересказываем, глядя на три картинки-опоры. Структура рассказа.</span></span></a><a class="line" href="urok_29.html"><span class="num">29</span><span class="tt"><span class="t">Шульте-турбо</span><span class="d">Декабрь · Шульте 5×5 с засечкой времени. Три попытки, фиксируем лучшую.</span></span></a><a class="line" href="urok_30.html"><span class="num">30</span><span class="tt"><span class="t">Антонимы-близнецы</span><span class="d">Декабрь · Подбираем слова наоборот: быстрый — медленный. Играем со смыслом.</span></span></a><a class="line" href="urok_31.html"><span class="num">31</span><span class="tt"><span class="t">Чтение про себя</span><span class="d">Декабрь · Учимся читать молча, без звука, только глазами. Самоконтроль.</span></span></a><a class="line" href="urok_32.html"><span class="num">32</span><span class="tt"><span class="t">Итоги месяца</span><span class="d">Декабрь · Игры месяца, «замер» внимания. Зимние награды за старание.</span></span></a><a class="line" href="urok_33.html"><span class="num">33</span><span class="tt"><span class="t">Замер января</span><span class="d">Январь · Читаем текст минуту, считаем слова. Сравниваем с сентябрём.</span></span></a><a class="line" href="urok_34.html"><span class="num">34</span><span class="tt"><span class="t">Чтение по ролям</span><span class="d">Январь · Читаем диалог по ролям. Учимся интонации и пониманию реплик.</span></span></a><a class="line" href="urok_35.html"><span class="num">35</span><span class="tt"><span class="t">Найди ошибку</span><span class="d">Январь · Ищем ошибку в знакомом слове и исправляем её. Пристальное внимание.</span></span></a><a class="line" href="urok_36.html"><span class="num">36</span><span class="tt"><span class="t">Сквозное слово</span><span class="d">Январь · Читаем текст через слово: только каждое второе. Тренируем поле взгляда.</span></span></a><a class="line" href="urok_37.html"><span class="num">37</span><span class="tt"><span class="t">Быстрее ветра</span><span class="d">Январь · Читаем короткий текст три раза, с каждым разом быстрее. Работаем над темпом.</span></span></a><a class="line" href="urok_38.html"><span class="num">38</span><span class="tt"><span class="t">Логика-следствие</span><span class="d">Январь · Заканчиваем предложение по смыслу: «Если снег тает, то…». Учимся выводить.</span></span></a><a class="line" href="urok_39.html"><span class="num">39</span><span class="tt"><span class="t">Встреча с синонимами</span><span class="d">Январь · Находим слова, похожие по смыслу. Обогащаем активный словарь.</span></span></a><a class="line" href="urok_40.html"><span class="num">40</span><span class="tt"><span class="t">Итоги месяца</span><span class="d">Январь · Игры месяца, «замер» на память. Отмечаем победы.</span></span></a><a class="line" href="urok_41.html"><span class="num">41</span><span class="tt"><span class="t">Числа-разведчики</span><span class="d">Февраль · Находим числа 1-20 в разных уголках таблицы. Тренируем внимание и поле зрения.</span></span></a><a class="line" href="urok_42.html"><span class="num">42</span><span class="tt"><span class="t">Слова-лесенки</span><span class="d">Февраль · Читаем лесенки слов: одна буква, две, три. Плавное расширение.</span></span></a><a class="line" href="urok_43.html"><span class="num">43</span><span class="tt"><span class="t">Интонации-чудеса</span><span class="d">Февраль · Читаем одну и ту же фразу с разной интонацией: вопрос, восклицание, шёпот.</span></span></a><a class="line" href="urok_44.html"><span class="num">44</span><span class="tt"><span class="t">Суть текста</span><span class="d">Февраль · После чтения выделяем главную мысль: о чём текст? Выбираем из двух вариантов.</span></span></a><a class="line" href="urok_45.html"><span class="num">45</span><span class="tt"><span class="t">Скоростной пересказ</span><span class="d">Февраль · Читаем и пересказываем за минуту, укладываясь в главное.</span></span></a><a class="line" href="urok_46.html"><span class="num">46</span><span class="tt"><span class="t">Буквы-прыгуны</span><span class="d">Февраль · Читаем слова с пропущенными буквами и восстанавливаем их. Предугадывание.</span></span></a><a class="line" href="urok_47.html"><span class="num">47</span><span class="tt"><span class="t">Поле зрения 5×5</span><span class="d">Февраль · Учимся окидывать взглядом всю таблицу 5×5, не «бегая» по клеточкам.</span></span></a><a class="line" href="urok_48.html"><span class="num">48</span><span class="tt"><span class="t">Итоги месяца</span><span class="d">Февраль · Игры месяца, «замер» скорости. Весёлые итоги февраля.</span></span></a><a class="line" href="urok_49.html"><span class="num">49</span><span class="tt"><span class="t">Весенние загадки</span><span class="d">Март · Читаем загадки и находим отгадки. Соединяем чтение и логику.</span></span></a><a class="line" href="urok_50.html"><span class="num">50</span><span class="tt"><span class="t">Пересказ с опорой 2</span><span class="d">Март · Пересказываем более длинный текст по четырём опорам-картинкам.</span></span></a><a class="line" href="urok_51.html"><span class="num">51</span><span class="tt"><span class="t">Скорочтение по абзацам</span><span class="d">Март · Читаем абзац целиком, находим в нём главную фразу. Структура текста.</span></span></a><a class="line" href="urok_52.html"><span class="num">52</span><span class="tt"><span class="t">Слоги-близнецы</span><span class="d">Март · Ищем одинаковые слоги в словах: ба-бушка, ба-нан. Играем со слогами.</span></span></a><a class="line" href="urok_53.html"><span class="num">53</span><span class="tt"><span class="t">Шпион в тексте</span><span class="d">Март · Ищем частотное слово в тексте и считаем, сколько раз встретилось. Внимание.</span></span></a><a class="line" href="urok_54.html"><span class="num">54</span><span class="tt"><span class="t">Читаем вверх ногами</span><span class="d">Март · Тренируем необычный взгляд: читаем знакомое слово в перевёрнутом виде. Смелость взгляда.</span></span></a><a class="line" href="urok_55.html"><span class="num">55</span><span class="tt"><span class="t">Итоги марта</span><span class="d">Март · Игры месяца, «замер» на чтение и логику. Рисуем радугу успеха.</span></span></a><a class="line" href="urok_56.html"><span class="num">56</span><span class="tt"><span class="t">Замер апреля</span><span class="d">Март · Минута чтения, считаем слова. Сопоставляем с прошлым замером.</span></span></a><a class="line" href="urok_57.html"><span class="num">57</span><span class="tt"><span class="t">Чтение сказки</span><span class="d">Апрель · Читаем знакомую сказку и ищем, чем отличается пересказ. Критическое ухо.</span></span></a><a class="line" href="urok_58.html"><span class="num">58</span><span class="tt"><span class="t">Колонки без указки</span><span class="d">Апрель · Читаем колонки глазами без пальчика. Свобода взгляда.</span></span></a><a class="line" href="urok_59.html"><span class="num">59</span><span class="tt"><span class="t">Понимание: зачем</span><span class="d">Апрель · После чтения объясняем, зачем герой что-то сделал. Работаем с мотивами.</span></span></a><a class="line" href="urok_60.html"><span class="num">60</span><span class="tt"><span class="t">Словесный дождик</span><span class="d">Апрель · Читаем слова на скорость по карточкам, добавляя испытанные ранее.</span></span></a><a class="line" href="urok_61.html"><span class="num">61</span><span class="tt"><span class="t">Поезд-скороговорка</span><span class="d">Апрель · Говорим скороговорки на скорость, не путая звуки. Чистота речи.</span></span></a><a class="line" href="urok_62.html"><span class="num">62</span><span class="tt"><span class="t">Итоги апреля</span><span class="d">Апрель · Игры месяца, «замер» памяти и внимания. Подготовка к финалу.</span></span></a><a class="line" href="urok_63.html"><span class="num">63</span><span class="tt"><span class="t">Тексты сложнее</span><span class="d">Апрель · Читаем текст, где знакомого меньше. Учимся не пугаться новизны.</span></span></a><a class="line" href="urok_64.html"><span class="num">64</span><span class="tt"><span class="t">Быстрая штука</span><span class="d">Апрель · Пробуем финальные скоростные упражнения: колонки, пирамиды, Шульте за раз.</span></span></a><a class="line" href="urok_65.html"><span class="num">65</span><span class="tt"><span class="t">Вертикальное чтение</span><span class="d">Май · Скользим взглядом вертикально по колонке текста, улавливая ключевые слова.</span></span></a><a class="line" href="urok_66.html"><span class="num">66</span><span class="tt"><span class="t">Мини-текст без страха</span><span class="d">Май · Читаем первый маленький текст целиком без остановок. Побеждаем страх длинного текста.</span></span></a><a class="line" href="urok_67.html"><span class="num">67</span><span class="tt"><span class="t">Слово-эстафета</span><span class="d">Май · Читаем текст по очереди по слову. Учимся быстрому включению в чтение.</span></span></a><a class="line" href="urok_68.html"><span class="num">68</span><span class="tt"><span class="t">Три тренажёра за раз</span><span class="d">Май · Проходим Шульте, колонку и пирамиду подряд. Комбинируем навыки.</span></span></a><a class="line" href="urok_69.html"><span class="num">69</span><span class="tt"><span class="t">Скоростное утро</span><span class="d">Май · Читаем утренний текст на время. Задаём бодрый старт дню.</span></span></a><a class="line" href="urok_70.html"><span class="num">70</span><span class="tt"><span class="t">Финальный замер</span><span class="d">Май · Последний замер скорости и сравнение с сентябрём: главная победа года.</span></span></a><a class="line" href="urok_71.html"><span class="num">71</span><span class="tt"><span class="t">Волшебный сертификат</span><span class="d">Май · Получаем сертификат «Мастер скорочтения» и делимся словами о годе.</span></span></a><a class="line" href="urok_72.html"><span class="num">72</span><span class="tt"><span class="t">Финальный урок</span><span class="d">Май · Повторяем любимые техники, благодарим друг друга. Тёплое прощание.</span></span></a></div>
+</body>
+</html>

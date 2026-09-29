@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Скорочтение 18 · все уроки</title>
+<style>
+:root{--bg:#0f1017; --card:#1a1c26; --ink:#e6e2d8; --main:#c9a94a; --main-2:#3f6fa8; --glow:#dfc470; --deep:#08090d; --line:#343747; --soft:#242733; --ok:#54b184; --ok-bg:#153a29; --bad:#cf6b60; --bad-bg:#3f1c19; --focus:#dfc470; --base:17px; --h1:27px; --h2:21px; --btn:56px; --btnf:19px; --rad:18px;}
+*{box-sizing:border-box; margin:0; padding:0}
+html,body{height:100%}
+body{
+  font-family:"Segoe UI","Trebuchet MS",Verdana,sans-serif;
+  font-size:var(--base); color:var(--ink); overflow:hidden;
+  background:
+    radial-gradient(1100px 620px at 78% -8%, rgba(255,200,77,.16), transparent 62%),
+    radial-gradient(760px 520px at 6% 104%, rgba(60,110,214,.13), transparent 60%),
+    var(--bg);
+  background-attachment:fixed;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 18% 22%, #fff8, transparent),
+    radial-gradient(1.5px 1.5px at 64% 12%, #fff8, transparent),
+    radial-gradient(1.2px 1.2px at 82% 48%, #fff6, transparent),
+    radial-gradient(1.4px 1.4px at 32% 68%, #fff6, transparent),
+    radial-gradient(1.2px 1.2px at 52% 86%, #fff5, transparent);
+}
+.stage{position:fixed; inset:0; z-index:1}
+.slide{
+  position:absolute; inset:0; overflow-y:auto; -webkit-overflow-scrolling:touch;
+  display:flex; align-items:center; justify-content:center; padding:28px 24px 88px;
+  opacity:0; transform:translateX(46px);
+  transition:opacity .25s ease, transform .25s ease; pointer-events:none;
+}
+.slide.active{opacity:1; transform:none; pointer-events:auto}
+.inner{width:100%; max-width:940px; margin:auto; display:flex; flex-direction:column; gap:18px}
+.kicker{font-size:17px; letter-spacing:1.3px; text-transform:uppercase; color:var(--glow); display:flex; gap:12px; align-items:center}
+h1{font-size:var(--h1); line-height:1.16; color:#fff6e6; text-shadow:0 2px 18px rgba(255,209,102,.20)}
+h2{font-size:var(--h2); line-height:1.22; color:#fff6e6}
+p.lead{font-size:19px; line-height:1.45; max-width:840px}
+p.hint{font-size:16px; color:var(--ink); opacity:.85; line-height:1.4; max-width:840px}
+p.hint small{opacity:.85}
+.card{background:var(--card); border:1px solid var(--line); border-radius:var(--rad);
+  box-shadow:0 8px 26px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.05); padding:18px 22px}
+.card.gilded{border:1px solid var(--main);
+  box-shadow:0 0 0 1px rgba(255,209,102,.15), 0 10px 30px rgba(0,0,0,.5)}
+.wings{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+.wing{background:var(--card); border:1px solid var(--line); border-radius:var(--rad);
+  padding:16px 20px; display:flex; gap:14px; align-items:center; box-shadow:0 6px 20px rgba(0,0,0,.35)}
+.wing .ico{font-size:38px; line-height:1; flex:none}
+.wing .tt{display:flex; flex-direction:column}
+.wing .t{font-weight:800; color:#fff6e6; font-size:20px}
+.wing .s{color:var(--glow); font-size:15px}
+.steps{display:flex; flex-direction:column; gap:12px}
+.step{display:flex; gap:14px; align-items:flex-start}
+.step .n{flex:none; width:40px; height:40px; border-radius:50%;
+  background:linear-gradient(160deg,var(--glow),var(--main)); color:#141a04; font-weight:800;
+  font-size:19px; display:flex; align-items:center; justify-content:center}
+.step .tx{font-size:18px; line-height:1.5}
+.timer{display:flex; flex-direction:column; align-items:center; gap:16px}
+.ring{width:200px; height:200px; border-radius:50%; border:6px solid var(--line);
+  display:flex; align-items:center; justify-content:center; position:relative;
+  background:radial-gradient(circle at 50% 42%, rgba(255,209,102,.10), transparent 70%)}
+.ring.go{border-color:var(--glow); box-shadow:0 0 26px rgba(255,209,102,.35)}
+.ring.done{border-color:var(--bad); box-shadow:0 0 26px rgba(232,96,79,.4)}
+.tnum{font-size:96px; font-weight:800; color:#fff6e6; line-height:1}
+.timer-ctrl{display:flex; gap:12px; flex-wrap:wrap; justify-content:center}
+.btn-primary{background:linear-gradient(180deg, var(--glow), var(--main)); color:#141a04; font-weight:800;
+  font-size:var(--btnf); border:none; border-radius:16px; min-height:var(--btn); padding:10px 26px; cursor:pointer;
+  box-shadow:0 4px 16px rgba(255,209,102,.30)}
+.btn-primary:hover{filter:brightness(1.08)}
+.btn{background:var(--soft); color:var(--ink); font-weight:700; font-size:var(--btnf);
+  border:1px solid var(--line); border-radius:16px; min-height:var(--btn); padding:10px 26px; cursor:pointer}
+.btn:hover{filter:brightness(1.1)}
+.chain{display:flex; flex-direction:column; align-items:center; gap:16px}
+.cword{font-size:50px; font-weight:800; color:var(--glow); min-height:72px;
+  display:flex; align-items:center; justify-content:center; text-align:center;
+  text-shadow:0 2px 18px rgba(255,209,102,.3)}
+.cdots{display:flex; gap:8px; flex-wrap:wrap; justify-content:center}
+.cdot{width:13px; height:13px; border-radius:50%; border:1px solid var(--line)}
+.cdot.on{background:var(--glow); border-color:var(--glow)}
+.cmsg{font-size:18px; min-height:28px}
+.schulte{display:grid; gap:8px; max-width:370px; margin:0 auto}
+.sn{aspect-ratio:1; border:1px solid var(--line); border-radius:10px; color:var(--glow);
+  font-size:21px; font-weight:700; display:flex; align-items:center; justify-content:center; background:var(--soft)}
+.chips{display:flex; flex-wrap:wrap; gap:12px; justify-content:center}
+.chip{background:var(--card); border:1px solid var(--line); border-radius:16px;
+  padding:12px 22px; font-size:20px; color:#fff6e6; box-shadow:0 5px 16px rgba(0,0,0,.3)}
+.center{text-align:center}
+.btns{display:flex; gap:14px; flex-wrap:wrap; justify-content:center}
+.nav{position:fixed; left:0; right:0; bottom:0; z-index:5;
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+  padding:12px 18px calc(12px + env(safe-area-inset-bottom));
+  background:linear-gradient(180deg, transparent, rgba(8,10,16,.92))}
+.dots{display:flex; gap:8px; flex-wrap:wrap}
+.dot{width:12px; height:12px; border-radius:50%; border:1px solid var(--line); background:transparent; cursor:pointer; padding:0}
+.dot.on{background:var(--glow); border-color:var(--glow); box-shadow:0 0 10px rgba(255,209,102,.55)}
+.counter{color:var(--ink); opacity:.85; font-size:17px}
+.keys{color:var(--ink); opacity:.75; font-size:15px; text-align:right}
+@media (prefers-reduced-motion: reduce){*{animation:none !important; transition:none !important}}
+@media (max-width:560px){
+  :root{--h1:25px; --h2:20px}
+  body{font-size:16px}
+  .wings{grid-template-columns:1fr}
+  .keys{display:none}
+  .slide{padding-bottom:100px}
+  .cword{font-size:40px}
+  .sn{font-size:18px}
+}
+@media print{
+  :root{
+    --bg:#fff; --card:#fff; --soft:#fff; --deep:#fff;
+    --ink:#1a1a1a; --line:#000;
+    --main:#000; --main-2:#555; --glow:#666; --focus:#000;
+  }
+  html,body{height:auto; overflow:visible; background:#fff !important}
+  body::before{display:none}
+  .stage{position:static}
+  .slide{position:static; display:block; opacity:1 !important; transform:none;
+    padding:14mm; height:auto; min-height:264mm; break-after:page; page-break-after:always;
+    overflow:visible; align-items:flex-start; pointer-events:auto}
+  .slide:last-child{break-after:auto}
+  .nav{display:none}
+  .card,.wing,.chip{box-shadow:none; background:#fff !important; border:.5pt solid #000; border-radius:0}
+  *{background-image:none !important; text-shadow:none !important; box-shadow:none !important}
+  h1,h2,.wing .t,.sn,.cword,.step .n{color:#000 !important; text-shadow:none}
+  .step .n,.sn{border:.5pt solid #000; background:none !important}
+  .btn-primary,.btn{background:none !important; color:#000 !important; border:.5pt solid #000}
+  .ring{border:.5pt solid #000}
+}
+
+body{padding:20px; overflow:auto}
+h1{margin-bottom:6px} .back{display:inline-block; margin-bottom:18px; color:var(--glow)}
+.lines{display:flex; flex-direction:column; gap:8px}
+.line{display:flex; gap:14px; align-items:flex-start; background:var(--card); border:1px solid var(--line); border-radius:var(--rad); padding:14px 18px; color:var(--ink); text-decoration:none; transition:transform .15s ease, border-color .15s ease}
+.line:hover{border-color:var(--main); transform:translateX(4px); text-decoration:none}
+.line .num{font-weight:800; color:var(--glow); font-size:18px; min-width:34px}
+.line .t{font-weight:800; color:#fff6e6; font-size:18px}
+.line .d{color:var(--ink); opacity:.8; font-size:15px}
+</style>
+</head>
+<body>
+<a class="back" href="../index.html">← ко всем возрастам</a>
+<h1>Скорочтение · 18 · Кабинет</h1>
+<p class="hint">72 уроков · открывается в браузере · листай → · печать: каждый слайд отдельной страницей</p>
+<div class="lines"><a class="line" href="urok_01.html"><span class="num">01</span><span class="tt"><span class="t">Вводная диагностика</span><span class="d">Сентябрь · Скорость, понимание, привычки. Выявление «тормозов» взрослого читателя.</span></span></a><a class="line" href="urok_02.html"><span class="num">02</span><span class="tt"><span class="t">Анатомия медленного чтения</span><span class="d">Сентябрь · Субвокализация, регрессии, узкое поле. Как убрать.</span></span></a><a class="line" href="urok_03.html"><span class="num">03</span><span class="tt"><span class="t">Речевое дыхание</span><span class="d">Сентябрь · Чтение вслух на длинном выдохе. Интонация взрослого.</span></span></a><a class="line" href="urok_04.html"><span class="num">04</span><span class="tt"><span class="t">Шульте 5×5–7×7</span><span class="d">Сентябрь · Серии, время поиска снижается.</span></span></a><a class="line" href="urok_05.html"><span class="num">05</span><span class="tt"><span class="t">Фиксации 3–5 слов</span><span class="d">Сентябрь · Якорный взгляд. Группы слов.</span></span></a><a class="line" href="urok_06.html"><span class="num">06</span><span class="tt"><span class="t">Первый темп-тест</span><span class="d">Сентябрь · Замер 3 текстов, понимание ≥ 85%.</span></span></a><a class="line" href="urok_07.html"><span class="num">07</span><span class="tt"><span class="t">Мотивация взрослого</span><span class="d">Сентябрь · Зачем вам скорость: работа, учёба, досуг.</span></span></a><a class="line" href="urok_08.html"><span class="num">08</span><span class="tt"><span class="t">Итоги месяца</span><span class="d">Сентябрь · Повторение, контрольный замер.</span></span></a><a class="line" href="urok_09.html"><span class="num">09</span><span class="tt"><span class="t">Субвокализация: замер</span><span class="d">Октябрь · Как «голос в голове» тормозит взрослых.</span></span></a><a class="line" href="urok_10.html"><span class="num">10</span><span class="tt"><span class="t">Метод «кликер»</span><span class="d">Октябрь · Отстукивание ритма, угнетение внутренней речи.</span></span></a><a class="line" href="urok_11.html"><span class="num">11</span><span class="tt"><span class="t">Темп выше голоса</span><span class="d">Октябрь · Спринт: быстрее внутренней речи.</span></span></a><a class="line" href="urok_12.html"><span class="num">12</span><span class="tt"><span class="t">Метроном-тренинг</span><span class="d">Октябрь · Ритм 90→150 BPM.</span></span></a><a class="line" href="urok_13.html"><span class="num">13</span><span class="tt"><span class="t">Пачки и блоки</span><span class="d">Октябрь · Фиксация 3–7 слов, смысловые группы.</span></span></a><a class="line" href="urok_14.html"><span class="num">14</span><span class="tt"><span class="t">Смешанные стратегии</span><span class="d">Октябрь · Чередуем сплошное и просмотровое.</span></span></a><a class="line" href="urok_15.html"><span class="num">15</span><span class="tt"><span class="t">Релаксация глаз</span><span class="d">Октябрь · Пальминг, расслабление, профилактика усталости.</span></span></a><a class="line" href="urok_16.html"><span class="num">16</span><span class="tt"><span class="t">Замер октября</span><span class="d">Октябрь · Скорость и понимание.</span></span></a><a class="line" href="urok_17.html"><span class="num">17</span><span class="tt"><span class="t">Ментальная карта PRO</span><span class="d">Ноябрь · Карта сложного текста, многоуровневая.</span></span></a><a class="line" href="urok_18.html"><span class="num">18</span><span class="tt"><span class="t">Реферат-молния</span><span class="d">Ноябрь · Выжимка текста за 15 минут.</span></span></a><a class="line" href="urok_19.html"><span class="num">19</span><span class="tt"><span class="t">Информационные яды</span><span class="d">Ноябрь · Анализ манипуляций, когнитивные искажения</span></span></a><a class="line" href="urok_20.html"><span class="num">20</span><span class="tt"><span class="t">Критическое чтение</span><span class="d">Ноябрь · Аргументы, выводы, источники, проверка фактов.</span></span></a><a class="line" href="urok_21.html"><span class="num">21</span><span class="tt"><span class="t">Инференция 2.0</span><span class="d">Ноябрь · Чтение между строк, подтекст.</span></span></a><a class="line" href="urok_22.html"><span class="num">22</span><span class="tt"><span class="t">Сравнение источников</span><span class="d">Ноябрь · Два мнения на один вопрос.</span></span></a><a class="line" href="urok_23.html"><span class="num">23</span><span class="tt"><span class="t">Структура любой книги</span><span class="d">Ноябрь · Оглавление, бриф, выводы — схема БОФК.</span></span></a><a class="line" href="urok_24.html"><span class="num">24</span><span class="tt"><span class="t">Замер ноября</span><span class="d">Ноябрь · Скорость + глубина.</span></span></a><a class="line" href="urok_25.html"><span class="num">25</span><span class="tt"><span class="t">Шульте 7×7 максимум</span><span class="d">Декабрь · Предельные таблицы, расслабление взгляда.</span></span></a><a class="line" href="urok_26.html"><span class="num">26</span><span class="tt"><span class="t">Вертикаль</span><span class="d">Декабрь · Двух-трёхколоночные тексты.</span></span></a><a class="line" href="urok_27.html"><span class="num">27</span><span class="tt"><span class="t">Z-чтение и диагональ</span><span class="d">Декабрь · Траектории взгляда для плотных страниц.</span></span></a><a class="line" href="urok_28.html"><span class="num">28</span><span class="tt"><span class="t">Сканирование</span><span class="d">Декабрь · Ответы в больших документах за секунды.</span></span></a><a class="line" href="urok_29.html"><span class="num">29</span><span class="tt"><span class="t">Чтение PDF</span><span class="d">Декабрь · Скорость в файлах, пометки, структура pdf.</span></span></a><a class="line" href="urok_30.html"><span class="num">30</span><span class="tt"><span class="t">Комбо-интенсив</span><span class="d">Декабрь · Вертикаль + скан + конспект.</span></span></a><a class="line" href="urok_31.html"><span class="num">31</span><span class="tt"><span class="t">Синтез двух текстов</span><span class="d">Декабрь · Общий вывод из двух источников.</span></span></a><a class="line" href="urok_32.html"><span class="num">32</span><span class="tt"><span class="t">Замер декабря</span><span class="d">Декабрь · Скорость + глубина.</span></span></a><a class="line" href="urok_33.html"><span class="num">33</span><span class="tt"><span class="t">Память взрослого</span><span class="d">Январь · Рабочая память, N-back, интерференция.</span></span></a><a class="line" href="urok_34.html"><span class="num">34</span><span class="tt"><span class="t">Дворец памяти</span><span class="d">Январь · Метод локусов для глав книги.</span></span></a><a class="line" href="urok_35.html"><span class="num">35</span><span class="tt"><span class="t">Интервальные повторения</span><span class="d">Январь · Кривая забывания, план повторов.</span></span></a><a class="line" href="urok_36.html"><span class="num">36</span><span class="tt"><span class="t">Глубокая работа</span><span class="d">Январь · Помодоро, фокус, без отвлечений.</span></span></a><a class="line" href="urok_37.html"><span class="num">37</span><span class="tt"><span class="t">Эйдетика</span><span class="d">Январь · Образы прочитанного, визуализация.</span></span></a><a class="line" href="urok_38.html"><span class="num">38</span><span class="tt"><span class="t">Спид-загрузка</span><span class="d">Январь · Запоминание главного без заметок.</span></span></a><a class="line" href="urok_39.html"><span class="num">39</span><span class="tt"><span class="t">Сплошной марафон</span><span class="d">Январь · Длинные главы без перерывов.</span></span></a><a class="line" href="urok_40.html"><span class="num">40</span><span class="tt"><span class="t">Замер января</span><span class="d">Январь · Скорость, память, концентрация.</span></span></a><a class="line" href="urok_41.html"><span class="num">41</span><span class="tt"><span class="t">Договоры и документы</span><span class="d">Февраль · Юридический язык, главные пункты, риски.</span></span></a><a class="line" href="urok_42.html"><span class="num">42</span><span class="tt"><span class="t">Профессиональная литература</span><span class="d">Февраль · Статьи по специальности, термины.</span></span></a><a class="line" href="urok_43.html"><span class="num">43</span><span class="tt"><span class="t">Новости и аналитика</span><span class="d">Февраль · Факт/мнение/прогноз. Скорость в ленте.</span></span></a><a class="line" href="urok_44.html"><span class="num">44</span><span class="tt"><span class="t">Деловая переписка</span><span class="d">Февраль · Быстрое чтение писем, отчётов, презентаций.</span></span></a><a class="line" href="urok_45.html"><span class="num">45</span><span class="tt"><span class="t">Отчёты и данные</span><span class="d">Февраль · Чтение цифр, графиков, таблиц.</span></span></a><a class="line" href="urok_46.html"><span class="num">46</span><span class="tt"><span class="t">Техническая документация</span><span class="d">Февраль · Инструкции, руководства, спецификации.</span></span></a><a class="line" href="urok_47.html"><span class="num">47</span><span class="tt"><span class="t">Экран и многозадачность</span><span class="d">Февраль · Чтение в окнах, вкладках, чатах.</span></span></a><a class="line" href="urok_48.html"><span class="num">48</span><span class="tt"><span class="t">Замер февраля</span><span class="d">Февраль · Скорость + профессиональные навыки.</span></span></a><a class="line" href="urok_49.html"><span class="num">49</span><span class="tt"><span class="t">Художественный текст</span><span class="d">Март · Скорость и эстетика, подтекст.</span></span></a><a class="line" href="urok_50.html"><span class="num">50</span><span class="tt"><span class="t">Наука и учебники</span><span class="d">Март · Точная скорость для сложного материала.</span></span></a><a class="line" href="urok_51.html"><span class="num">51</span><span class="tt"><span class="t">Публицистика</span><span class="d">Март · Мнение, риторика, критика.</span></span></a><a class="line" href="urok_52.html"><span class="num">52</span><span class="tt"><span class="t">Философия и сложное</span><span class="d">Март · Плотный текст, медленная скорость vs быстрая.</span></span></a><a class="line" href="urok_53.html"><span class="num">53</span><span class="tt"><span class="t">Цифровая среда</span><span class="d">Март · Приложения, pdf, веб. Комфорт глаз.</span></span></a><a class="line" href="urok_54.html"><span class="num">54</span><span class="tt"><span class="t">Терминология</span><span class="d">Март · Новые термины за дни, не недели.</span></span></a><a class="line" href="urok_55.html"><span class="num">55</span><span class="tt"><span class="t">Комбо-урок</span><span class="d">Март · Все техники в одном тексте.</span></span></a><a class="line" href="urok_56.html"><span class="num">56</span><span class="tt"><span class="t">Замер марта</span><span class="d">Март · Скорость + точность.</span></span></a><a class="line" href="urok_57.html"><span class="num">57</span><span class="tt"><span class="t">Автоматизм 2.0</span><span class="d">Апрель · Свободное чтение, плавный темп.</span></span></a><a class="line" href="urok_58.html"><span class="num">58</span><span class="tt"><span class="t">Спринты предельные</span><span class="d">Апрель · Короткие тексты на пределе.</span></span></a><a class="line" href="urok_59.html"><span class="num">59</span><span class="tt"><span class="t">Марафоны длинные</span><span class="d">Апрель · Удержание темпа 25+ минут.</span></span></a><a class="line" href="urok_60.html"><span class="num">60</span><span class="tt"><span class="t">Скорость в работе</span><span class="d">Апрель · Брифы, отчёты, совещания: быстрый конспект.</span></span></a><a class="line" href="urok_61.html"><span class="num">61</span><span class="tt"><span class="t">Многозадачность PRO</span><span class="d">Апрель · Чтение + конспект + решение.</span></span></a><a class="line" href="urok_62.html"><span class="num">62</span><span class="tt"><span class="t">Эмоции и стресс</span><span class="d">Апрель · Скорость без тревоги: дыхание, настрой.</span></span></a><a class="line" href="urok_63.html"><span class="num">63</span><span class="tt"><span class="t">Личная стратегия</span><span class="d">Апрель · Когда быстро, когда вдумчиво.</span></span></a><a class="line" href="urok_64.html"><span class="num">64</span><span class="tt"><span class="t">Замер апреля</span><span class="d">Апрель · Комплексная диагностика.</span></span></a><a class="line" href="urok_65.html"><span class="num">65</span><span class="tt"><span class="t">Финальный замер</span><span class="d">Май · Скорость, понимание, память. Сравнение со стартом.</span></span></a><a class="line" href="urok_66.html"><span class="num">66</span><span class="tt"><span class="t">Практический экзамен</span><span class="d">Май · Сложный незнакомый текст: план, пересказ, выводы.</span></span></a><a class="line" href="urok_67.html"><span class="num">67</span><span class="tt"><span class="t">Марафон навыков</span><span class="d">Май · Соревнования по всем техникам.</span></span></a><a class="line" href="urok_68.html"><span class="num">68</span><span class="tt"><span class="t">Летний план</span><span class="d">Май · Тренировки, цель, список книг.</span></span></a><a class="line" href="urok_69.html"><span class="num">69</span><span class="tt"><span class="t">Скорость и удовольствие</span><span class="d">Май · Быстрое чтение как навык жизни.</span></span></a><a class="line" href="urok_70.html"><span class="num">70</span><span class="tt"><span class="t">Своя система</span><span class="d">Май · Личная формула скорочтения навсегда.</span></span></a><a class="line" href="urok_71.html"><span class="num">71</span><span class="tt"><span class="t">Праздник результата</span><span class="d">Май · Сертификат, истории, планы развития.</span></span></a><a class="line" href="urok_72.html"><span class="num">72</span><span class="tt"><span class="t">Финальный урок</span><span class="d">Май · Итоги, напутствия, следующий уровень.</span></span></a></div>
+</body>
+</html>
