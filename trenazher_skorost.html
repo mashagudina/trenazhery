@@ -175,6 +175,22 @@ p{margin:6px 0;color:var(--dim)}
 .btn:disabled{opacity:.5;cursor:not-allowed;filter:none;transform:none}
 :focus-visible{outline:3px solid var(--gold-lt);outline-offset:2px;border-radius:8px}
 
+.seg{
+  display:flex;gap:8px;background:var(--deep);border:1px solid var(--line);
+  border-radius:16px;padding:6px;margin-bottom:12px;
+}
+.seg-btn{
+  flex:1 1 0;min-width:0;border:none;background:transparent;color:var(--dim);
+  font-family:inherit;font-size:15px;font-weight:700;
+  padding:10px 12px;border-radius:11px;cursor:pointer;min-height:44px;
+  transition:background .18s ease,color .18s ease,box-shadow .18s ease;
+}
+.seg-btn:hover{background:var(--soft);color:var(--gold-lt)}
+.seg-btn.active{
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold));
+  color:var(--ink-on-gold);box-shadow:0 4px 14px rgba(240,180,41,.32);
+}
+
 .reading{
   background:var(--card-2);border:1px solid var(--line);border-radius:14px;
   padding:18px;font-size:19px;line-height:2;color:var(--ink);
@@ -216,6 +232,8 @@ p{margin:6px 0;color:var(--dim)}
   .btn{flex:1 1 auto}
   .timer{font-size:26px;min-width:80px}
   .reading{font-size:17px;line-height:1.9;max-height:58vh}
+  .seg{flex-direction:column}
+  .seg-btn{font-size:14px}
   .tgl{position:static;display:block;margin:10px auto 0}
   .candle.c3{display:none}
 }
@@ -227,7 +245,7 @@ p{margin:6px 0;color:var(--dim)}
     --ink-on-gold:#000;
   }
   html,body{background:#fff !important;color:#1a1a1a !important}
-  body::before,.candles,.tgl,.bar .btn{display:none !important}
+  body::before,.candles,.tgl,.bar .btn,.seg{display:none !important}
   *,*::before,*::after{
     background-image:none !important;text-shadow:none !important;
     box-shadow:none !important;animation:none !important;transition:none !important;
@@ -249,18 +267,23 @@ p{margin:6px 0;color:var(--dim)}
 <body>
 <header>
   <h1>🧭 Замер скорости чтения</h1>
-  <p>1 минута · текст ~1000 слов · нажми последнее прочитанное слово</p>
+   <p>1 минута · выбери уровень текста · нажми последнее прочитанное слово</p>
 </header>
 <main>
 
   <div class="card rv">
     <h2>📖 Как это работает</h2>
+    <p>0. Выбери текст: <b>для взрослых</b> (~1000 слов) или <b>для детей</b> (до 500 слов).</p>
     <p>1. Нажми <b>«Старт»</b> — пойдёт ровно одна минута.</p>
     <p>2. Читай текст про себя (или вслух) как можно быстрее, но понимая смысл.</p>
     <p>3. Когда минута выйдет, нажми на слово, до которого успел(а) дочитать. Тренажёр посчитает, сколько слов ты прочёл(ла) за минуту.</p>
   </div>
 
   <div class="card rv">
+    <div class="seg" role="group" aria-label="Уровень текста">
+      <button class="seg-btn active" id="modeAdult" type="button" data-mode="adult">Для взрослых · ~1000 слов</button>
+      <button class="seg-btn" id="modeKids" type="button" data-mode="kids">Для детей · до 500 слов</button>
+    </div>
     <div class="bar">
       <span class="timer" id="timer">1:00</span>
       <button class="btn" id="start" type="button">▶ Старт</button>
@@ -333,6 +356,7 @@ p{margin:6px 0;color:var(--dim)}
 (function(){
   "use strict";
   var DATA = (window.SKOROST_TEXTS || []).slice();
+  var DATA_KIDS = (window.SKOROST_TEXTS_KIDS || []).slice();
   var textBox  = document.getElementById('text');
   var timerEl  = document.getElementById('timer');
   var hintEl   = document.getElementById('hint');
@@ -349,6 +373,23 @@ p{margin:6px 0;color:var(--dim)}
   var tick = null;
   var words = [];              // span-узлы
   var current = null;
+  var SETS = { adult: DATA, kids: DATA_KIDS };
+  var mode = 'adult';          // adult | kids
+
+  var modeBtns = Array.prototype.slice.call(document.querySelectorAll('.seg-btn'));
+  function applyMode(){
+    modeBtns.forEach(function(b){
+      b.classList.toggle('active', b.dataset.mode === mode);
+    });
+  }
+  function setMode(m){
+    if(!SETS[m] || !SETS[m].length || m === mode) return;
+    mode = m;
+    applyMode();
+    try { localStorage.setItem('tr-skorost-mode', mode); } catch(e){}
+    current = null;
+    newText();
+  }
 
   function fmt(sec){
     var m = Math.floor(sec / 60), s = sec % 60;
@@ -356,10 +397,11 @@ p{margin:6px 0;color:var(--dim)}
   }
 
   function pickText(){
-    if(!DATA.length) return null;
-    var next = DATA[Math.floor(Math.random() * DATA.length)];
-    if(DATA.length > 1 && current && next === current){
-      next = DATA[(DATA.indexOf(next) + 1) % DATA.length];
+    var pool = SETS[mode] || [];
+    if(!pool.length) return null;
+    var next = pool[Math.floor(Math.random() * pool.length)];
+    if(pool.length > 1 && current && next === current){
+      next = pool[(pool.indexOf(next) + 1) % pool.length];
     }
     return next;
   }
@@ -477,7 +519,20 @@ p{margin:6px 0;color:var(--dim)}
   startBtn.addEventListener('click', startRun);
   newBtn.addEventListener('click', newText);
 
-  if(DATA.length){
+  modeBtns.forEach(function(b){
+    if(!SETS[b.dataset.mode] || !SETS[b.dataset.mode].length){ b.style.display = 'none'; }
+    b.addEventListener('click', function(){ setMode(b.dataset.mode); });
+  });
+
+  var savedMode = null;
+  try { savedMode = localStorage.getItem('tr-skorost-mode'); } catch(e){}
+  if(!savedMode || !SETS[savedMode] || !SETS[savedMode].length){
+    savedMode = SETS.adult.length ? 'adult' : 'kids';
+  }
+  mode = savedMode;
+  applyMode();
+
+  if(SETS[mode] && SETS[mode].length){
     render(pickText());
     reset();
   } else {
