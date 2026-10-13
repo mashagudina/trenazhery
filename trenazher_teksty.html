@@ -1,8 +1,8 @@
-﻿<!DOCTYPE html>
-<html lang=""ru"" data-theme=""dark"">
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
 <head>
-<meta charset=""UTF-8"">
-<meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Тексты для пересказа, названия, плана</title>
 <style>
 :root{--bg:#0e1330;--card:#1a2050;--card-2:#222a63;--ink:#f4e9d0;--dim:#b8c0e0;--line:#39427f;--gold:#f0b429;--gold-lt:#ffd166;--ok:#48c98e;--bad:#e8604f;--ink-on-gold:#2a1f05;--shadow:0 10px 30px rgba(0,0,0,.45)}
@@ -28,27 +28,27 @@ select,button{font-family:inherit;font-size:15px;min-height:40px;border-radius:1
 </head>
 <body>
 <header>
-  <div class=""in""><h1>Тексты для пересказа, названия, плана</h1></div>
-  <button class=""tgl"" id=""themeBtn"">Светлая</button>
+  <div class="in"><h1>Тексты для пересказа, названия, плана</h1></div>
+  <button class="tgl" id="themeBtn">Светлая</button>
 </header>
 <main>
-  <div class=""card"">
-    <div class=""row"">
-      <select id=""age""><option value=""6-12"">6-12</option><option value=""13-17"">13-17</option><option value=""18+"">18+</option></select>
-      <select id=""genre""><option value=""детские"">детские</option><option value=""классика"">классика</option><option value=""современная"">современная</option><option value=""научная"">научная</option></select>
-      <select id=""task""><option value=""пересказ"">пересказ</option><option value=""название"">название</option><option value=""план"">план</option></select>
-      <select id=""level""><option value=""1"">1</option><option value=""2"">2</option><option value=""3"">3</option></select>
-      <button class=""btn"" onclick=""gen()"">Сгенерировать</button>
-      <button class=""btn"" onclick=""gen()"">Ещё</button>
+  <div class="card">
+    <div class="row">
+      <select id="age"><option value="6-12">6-12</option><option value="13-17">13-17</option><option value="18+">18+</option></select>
+      <select id="genre"><option value="детские">детские</option><option value="классика">классика</option><option value="современная">современная</option><option value="научная">научная</option></select>
+      <select id="task"><option value="пересказ">пересказ</option><option value="название">название</option><option value="план">план</option></select>
+      <select id="level"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+      <button class="btn" onclick="gen()">Сгенерировать</button>
+      <button class="btn" onclick="gen()">Ещё</button>
     </div>
-    <div id=""info"" style=""color:var(--dim);margin-top:6px""></div>
-    <div id=""text"" class=""text""></div>
+    <div id="info" style="color:var(--dim);margin-top:6px"></div>
+    <div id="text" class="text"></div>
   </div>
-  <div class=""card"" id=""qcard"" style=""display:none""><h3>Вопросы</h3><div id=""qlist""></div></div>
-  <div class=""card"" id=""openCard"" style=""display:none""><h3 id=""openTitle""></h3><textarea style=""width:100%;min-height:60px;border-radius:8px;background:var(--card-2);color:var(--ink);border:1px solid var(--line)""></textarea></div>
-  <a class=""back"" href=""index.html"">Назад</a>
+  <div class="card" id="qcard" style="display:none"><h3>Вопросы</h3><div id="qlist"></div></div>
+  <div class="card" id="openCard" style="display:none"><h3 id="openTitle"></h3><textarea style="width:100%;min-height:60px;border-radius:8px;background:var(--card-2);color:var(--ink);border:1px solid var(--line)"></textarea></div>
+  <a class="back" href="index.html">Назад</a>
 </main>
-<script src=""teksty_data.js""></script>
+<script src="teksty_data.js"></script>
 <script>
 var D = window.TEKSTY_DATA || {items:[]};
 function gen(){
