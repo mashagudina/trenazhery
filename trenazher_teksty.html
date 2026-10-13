@@ -58,6 +58,7 @@ function gen(){
   var level=parseInt(document.getElementById('level').value);
   var list=D.items.filter(function(x){return x.age===age && x.genre===genre && x.task===task && x.level===level;});
   if(list.length===0) list=D.items.filter(function(x){return x.age===age && x.task===task && x.level===level;});
+  if(list.length===0) list=D.items.filter(function(x){return x.age===age && x.task===task;});
   if(list.length===0){document.getElementById('text').textContent='Нет данных'; document.getElementById('qcard').style.display='none'; document.getElementById('openCard').style.display='none'; return;}
   var item=list[Math.floor(Math.random()*list.length)];
   document.getElementById('text').textContent=item.text;
